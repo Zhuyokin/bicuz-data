@@ -1,0 +1,11 @@
+// global transition css
+
+/* 页面切换动画*/
+.page-enter-active, .page-leave-active {
+  will-change: opacity;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.page-enter-from, .page-leave-to {
+  opacity: 0;
+}

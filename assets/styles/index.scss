@@ -1,0 +1,36 @@
+@import './transition.scss';
+
+html,
+body,
+#__nuxt {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+// 隐藏scroll-view的滚动条
+::-webkit-scrollbar {
+  display: none;  
+  width: 0 !important;  
+  height: 0 !important;  
+  -webkit-appearance: none;  
+  background: transparent;  
+}
+
+// 点击动效按钮
+.scale-btn:active {
+  -webkit-transform: scale(0.7);
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  -o-transform: scale(0.7);
+  transform: scale(0.7);
+  /* 可能有助于解决渲染问题 */
+  transition: transform 0.1s linear;
+}
