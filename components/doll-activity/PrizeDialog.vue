@@ -58,7 +58,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       align-items: center;
       width: 684px;
       height: 683px;
-      background: url('@/assets/images/qixi-activity/fk-bg.webp') center center /
+      background: url('@/assets/images/doll-activity/surprise-doll-bg.webp') center center /
         cover no-repeat transparent;
       font-size: 28px;
       padding-top: 260px;
