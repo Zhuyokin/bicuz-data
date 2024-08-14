@@ -8,8 +8,8 @@
         @ready="onReady"
       />
     </div>
-    <div v-if="!playCatch" class="machine-box" />
-    <div v-else class="catch-box">
+    <div class="machine-box" v-if="!playCatch" />
+    <div class="catch-box" v-else >
       <anim-player
         :conf="mConfig"
         @ready="onMReady"
@@ -110,7 +110,7 @@
     </div>
     <div v-motion-pop-visible-once class="act-rule-box" />
     <!-- 福馈弹窗 -->
-    <FukuiDialog ref="fukuiDialogRef" @success="initPage" />
+    <ResultDialog ref="resultDialogRef" @success="initPage" />
     <!-- 惊喜娃娃 -->
     <SurpriseDialog ref="surpriseDialogRef" @success="initPage" />
     <!-- 奖品 -->
@@ -128,7 +128,7 @@
 
 <script setup lang="ts">
 import { dollActApi } from '@/api/index'
-import FukuiDialog from '@/components/doll-activity/FukuiDialog.vue'
+import ResultDialog from '@/components/doll-activity/ResultDialog.vue'
 import ExchangeBtn from '@/assets/images/doll-activity/exchange-btn.webp'
 import LuckyBtn from '@/assets/images/doll-activity/lucky-btn.webp'
 import PrizeBtn from '@/assets/images/doll-activity/prize-btn.webp'
@@ -196,7 +196,7 @@ const getTimesTab = ref([
     active: false,
   },
 ])
-const fukuiDialogRef = ref<HTMLElement | null>(null)
+const resultDialogRef = ref<HTMLElement | null>(null)
 const surpriseDialogRef = ref<HTMLElement | null>(null)
 const exchangeDialogRef = ref<HTMLElement | null>(null)
 const prizeDialogRef = ref<HTMLElement | null>(null)
@@ -219,7 +219,7 @@ const config = ref({
   json: backgroundJSON,
   loop: true,
   useType: 2,
-  accurate: false,
+  // accurate: false,
 })
 const mConfig = ref({
   width: 750,
@@ -228,8 +228,9 @@ const mConfig = ref({
   json: successJSON,
   loop: false,
   useType: 2,
-  accurate: false,
+  // accurate: false,
   onEnded: () => {
+    openResult();
     playCatch.value = false
   },
 })
@@ -348,8 +349,8 @@ const confirmCatch = async () => {
     console.log('confirmCatch >', res)
 }
 
-const openFukui = () => {
-  fukuiDialogRef?.value?.openDialog()
+const openResult = () => {
+  resultDialogRef?.value?.openDialog()
 }
 
 const openSurprise = () => {
