@@ -327,10 +327,16 @@ const initPage = () => {
 }
 
 const confirmCatch = async () => {
+  if (!skipActive.value) { // 跳过
+      playCatch.value = true
+    }
+    return
     const res = await dollActApi.getLotteryPrize({ type: dollIdx.value, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
       console.log("err >",JSON.parse(err));
       if(JSON.parse(err)?.msg === "余额不足"){
-        handleRecharge()
+        setTimeout(() => {
+          handleRecharge()
+        },500)
       }
     })
     if (!res)
