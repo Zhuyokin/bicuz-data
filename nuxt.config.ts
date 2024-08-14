@@ -56,6 +56,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@vant/nuxt',
     'nuxt-lodash',
+    '@vueuse/motion/nuxt',
   ],
 
   experimental: {

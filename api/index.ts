@@ -10,6 +10,7 @@ import * as soeApi from './modules/618'
 import * as rechargeActApi from './modules/recharge-activity'
 import * as rechargeDiscountApi from './modules/recharge-discount'
 import * as singActApi from './modules/singer-activity'
+import * as dollActApi from './modules/doll-activity'
 
 export {
   activityApi,
@@ -24,4 +25,5 @@ export {
   rechargeActApi,
   rechargeDiscountApi,
   singActApi,
+  dollActApi,
 }
