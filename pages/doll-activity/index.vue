@@ -203,7 +203,7 @@ const prizeDialogRef = ref<HTMLElement | null>(null)
 const luckyDialogRef = ref<HTMLElement | null>(null)
 const recordDialogRef = ref<HTMLElement | null>(null)
 const dollDialogRef = ref<HTMLElement | null>(null)
-const activeTabIdx = ref(0)
+const activeTabIdx = ref(1)
 const skipActive = ref(false)
 const taskNum = ref(0)
 const user_id = ref(0)
@@ -327,14 +327,19 @@ const initPage = () => {
 }
 
 const confirmCatch = async () => {
-  const res = await dollActApi.getLotteryPrize({ type: dollIdx.value, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => console.log(err))
-  if (!res)
-    return
-  initPage()
-  if (!skipActive.value) { // 跳过
-    playCatch.value = true
-  }
-  console.log('confirmCatch >', res)
+    const res = await dollActApi.getLotteryPrize({ type: dollIdx.value, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
+      console.log("err >",JSON.parse(err));
+      if(JSON.parse(err)?.msg === "余额不足"){
+        handleRecharge()
+      }
+    })
+    if (!res)
+      return
+    initPage()
+    if (!skipActive.value) { // 跳过
+      playCatch.value = true
+    }
+    console.log('confirmCatch >', res)
 }
 
 const openFukui = () => {
