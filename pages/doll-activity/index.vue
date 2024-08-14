@@ -387,8 +387,8 @@ const getTaskReward = async (id: number) => {
 }
 
 // hook使用
-useHandleData(true, () => {
-})
+// useHandleData(true, () => {
+// })
 
 onMounted(() => {
   initPage()
