@@ -8,7 +8,7 @@
           </div>
           <div class="debris-box">
             <div class="debris-icon"></div>
-            <div class="debris-num">{{props.debris}}碎片</div>
+            <div class="debris-num">{{ props.debris }}碎片</div>
           </div>
           <div class="gift-prize-box">
             <div class="main">
@@ -42,7 +42,9 @@
                 </div>
                 <!-- 图片 -->
                 <div class="prize-pic"
-                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`" />
+                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`">
+                  <anim-player :conf="i.config" @ready="(player) => player.player.start()" />
+                </div>
                 <div class="gift-name">
                   {{ item?.name }}x{{ item?.day }}
                 </div>
@@ -67,6 +69,7 @@
 import { ref } from 'vue'
 import { dollActApi } from '~/api'
 import ConfirmExDialog from '~/components/doll-activity/ConfirmExDialog.vue'
+import animPlayer from '@/components/anim-player/index.vue'
 
 const show = ref(false)
 const giftList = ref([])
@@ -98,7 +101,15 @@ const getMall = async (type: number) => {
   if (type === 1)
     giftList.value = res.list
   if (type === 2)
-    dressList.value = res.list
+    dressList.value = res.list.map(i => {
+      return {
+        ...i, config: {
+          url: prependHttpIfMissing(i.image),
+          loop: false,
+          useType: 2,
+        }
+      }
+    })
 }
 
 const setVisible = (bool: boolean) => {
@@ -190,11 +201,13 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         align-items: center;
         justify-content: center;
         gap: 17px;
+
         .debris-icon {
           width: 50px;
           height: 50px;
           background: url('@/assets/images/doll-activity/debris-icon.webp') center center / cover no-repeat transparent;
         }
+
         .debris-num {
           color: #B04F00;
           font-size: 32px;
