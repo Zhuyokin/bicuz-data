@@ -95,7 +95,7 @@
     <!-- 福馈弹窗 -->
     <ResultDialog ref="resultDialogRef" @closeDialog="openDollDialog" />
     <!-- 惊喜娃娃 -->
-    <SurpriseDialog ref="surpriseDialogRef" @success="initPage" />
+    <DollRuleDialog ref="dollRuleDialogRef" @success="initPage" />
     <!-- 奖品 -->
     <PrizeDialog ref="prizeDialogRef" @success="initPage" />
     <!-- 欧皇 -->
@@ -121,7 +121,7 @@ import TimeBtnInActive from '@/assets/images/doll-activity/time-btn-inactive.web
 import skipConfirmBtn from '@/assets/images/doll-activity/skip-confirm.webp'
 import skipCancelBtn from '@/assets/images/doll-activity/skip-cancel.webp'
 import { isIosFun, js_sync_app, prependHttpIfMissing } from '@/utils/index'
-import SurpriseDialog from '~/components/doll-activity/SurpriseDialog.vue'
+import DollRuleDialog from '~/components/doll-activity/DollRuleDialog.vue'
 import ExchangeDialog from '~/components/doll-activity/ExchangeDialog.vue'
 import PrizeDialog from '~/components/doll-activity/PrizeDialog.vue'
 import LuckyDialog from '~/components/doll-activity/LuckyDialog.vue'
@@ -180,7 +180,7 @@ const getTimesTab = ref([
   },
 ])
 const resultDialogRef = ref<HTMLElement | null>(null)
-const surpriseDialogRef = ref<HTMLElement | null>(null)
+const dollRuleDialogRef = ref<HTMLElement | null>(null)
 const exchangeDialogRef = ref<HTMLElement | null>(null)
 const prizeDialogRef = ref<HTMLElement | null>(null)
 const luckyDialogRef = ref<HTMLElement | null>(null)
@@ -354,7 +354,7 @@ const openResult = () => {
 }
 
 const openSurprise = () => {
-  surpriseDialogRef?.value?.openDialog(surpriseRet.value)
+  dollRuleDialogRef?.value?.openDialog(surpriseRet.value)
 }
 
 const openPrize = () => {
@@ -405,11 +405,11 @@ const getTaskReward = async (id: number) => {
 }
 
 // hook使用
-// useHandleData(true, () => {
-// })
+useHandleData(true, () => {
+})
 
 onMounted(() => {
-  initPage()
+  // initPage()
   // openDollDialog()
 })
 </script>
