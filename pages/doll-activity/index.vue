@@ -215,11 +215,12 @@ const playCatch = ref(false)
 const config = ref({
   width: 750,
   height: 1400,
-  url: backgroundMp4,
+  // url: backgroundMp4,
+  url: '/mp4/background.mp4',
   json: backgroundJSON,
   loop: true,
   useType: 2,
-  // accurate: false,
+  accurate: false,
 })
 const mConfig = ref({
   width: 750,
@@ -228,7 +229,7 @@ const mConfig = ref({
   json: successJSON,
   loop: false,
   useType: 2,
-  // accurate: false,
+  accurate: false,
   onEnded: () => {
     openResult();
     playCatch.value = false
