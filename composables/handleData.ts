@@ -18,7 +18,7 @@ export function useHandleData(isAnalog = false, callback?: () => void) {
         // phone: '16675555505',
         // phone: '13411990420',
         // phone: '13411990428',
-        email: 'yokinzhu@gmail.com',
+        email: '598346@qq.com',
         // phone: '16675555505',
         // phone: '16675555504',
         // phone: '13424237548',
