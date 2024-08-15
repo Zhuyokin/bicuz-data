@@ -6,6 +6,10 @@
           <div class="title-txt">
             兑换商城
           </div>
+          <div class="debris-box">
+            <div class="debris-icon"></div>
+            <div class="debris-num">{{props.debris}}碎片</div>
+          </div>
           <div class="gift-prize-box">
             <div class="main">
               <div v-for="(item, index) in giftList" :key="index" class="prize-item">
@@ -69,13 +73,17 @@ const giftList = ref([])
 const dressList = ref([])
 const selectedItem = ref({})
 const confirmExDialogRef = ref<HTMLElement | null>(null)
+const emits = defineEmits(['success'])
+const props = defineProps<{
+  debris: number
+}>()
 
 const confirmExchange = async () => {
   const res = await dollActApi.exchangeDoll({ type: selectedItem.value.type, id: selectedItem.value.id }).catch(err => console.log(err))
   if (!res)
     return
-    showToast('兑换成功')
-  console.log(res)
+  showToast('兑换成功')
+  emits("success")
 }
 
 const openReceive = async (item: any) => {
@@ -172,6 +180,29 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
       .dress-prize-box {
         background: url('@/assets/images/doll-activity/dress-prize-bg.webp') center center / cover no-repeat transparent;
       }
+
+      .debris-box {
+        width: 271px;
+        height: 79px;
+        background: url('@/assets/images/doll-activity/debris-box.webp') center center / cover no-repeat transparent;
+        margin: 28px auto 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 17px;
+        .debris-icon {
+          width: 50px;
+          height: 50px;
+          background: url('@/assets/images/doll-activity/debris-icon.webp') center center / cover no-repeat transparent;
+        }
+        .debris-num {
+          color: #B04F00;
+          font-size: 32px;
+          font-weight: 500;
+          line-height: 79px;
+        }
+      }
+
 
       .main {
         height: 1000px;
