@@ -38,17 +38,6 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
 </script>
 
 <style lang="scss" scoped>
-@keyframes scale {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0.9);
-  }
-}
-// animation: scale1 1.5s linear 0s infinite;
 #fukui-dialog {
   :deep(.van-field__value) input {
     font-size: 28px;

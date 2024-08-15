@@ -11,7 +11,7 @@
     </div>
     <!-- 能量条 -->
     <div v-motion-pop-visible-once class="energy-box" @click="openDialog(4)">
-      <div class="energy-icon" />
+      <div class="energy-icon" :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`"/>
       <div class="energy-bar-box">
         <div class="complete" :style="`height: ${dollValObj?.surprise_value}%`" />
       </div>
@@ -23,8 +23,14 @@
         @click="openDialog(index)" />
     </div>
     <div v-motion-pop-visible-once class="confirm-container">
+      <!-- 上一个按钮 -->
+      <div class="pre-btn" @click="changeBtn(1)"></div>
       <!-- 确认按钮 -->
-      <div v-motion-pop-visible-once class="confirm-btn" @click="confirmCatch" />
+      <div v-motion-pop-visible-once
+        :style="`background:url(${activeBtn.btnImage})  center center / cover no-repeat transparent`"
+        class="confirm-btn" @click="confirmCatch" />
+      <!-- 下一个按钮 -->
+      <div class="next-btn" @click="changeBtn(2)"></div>
       <!-- 跳过动画 -->
       <div class="skip-btn" @click="skipActive = !skipActive">
         <div class="skip-icon"
@@ -101,11 +107,11 @@
     <!-- 欧皇 -->
     <LuckyDialog ref="luckyDialogRef" @success="initPage" />
     <!-- 兑换商城 -->
-    <ExchangeDialog ref="exchangeDialogRef" @success="initPage" />
+    <ExchangeDialog ref="exchangeDialogRef" @success="getSurpriseVal" :debris="dollValObj?.debris_number" />
     <!-- 记录 -->
     <RecordDialog ref="recordDialogRef" @success="initPage" />
     <!-- 娃娃弹窗 -->
-    <DollDialog ref="dollDialogRef" :type="1"  />
+    <DollDialog ref="dollDialogRef" :type="1" />
   </div>
 </template>
 
@@ -133,6 +139,14 @@ import backgroundMp4 from '@/assets/images/doll-activity/background.mp4?url'
 import backgroundJSON from '@/assets/images/doll-activity/background.json'
 import successMp4 from '@/assets/images/doll-activity/success.mp4?url'
 import successJSON from '@/assets/images/doll-activity/success.json'
+import Doll1Btn from '@/assets/images/doll-activity/doll1-btn.webp'
+import Doll2Btn from '@/assets/images/doll-activity/doll2-btn.webp'
+import Doll3Btn from '@/assets/images/doll-activity/doll3-btn.webp'
+import Doll4Btn from '@/assets/images/doll-activity/doll4-btn.webp'
+import Doll1Image from '@/assets/images/doll-activity/doll1.webp'
+import Doll2Image from '@/assets/images/doll-activity/doll2.webp'
+import Doll3Image from '@/assets/images/doll-activity/doll3.webp'
+import Doll4Image from '@/assets/images/doll-activity/doll4.webp'
 
 const rightBtns = ref([
   {
@@ -191,7 +205,6 @@ const skipActive = ref(false)
 const taskNum = ref(0)
 const user_id = ref(0)
 const diamond = ref(0)
-const dollIdx = ref(1)
 const dollValObj = ref({})
 const taskWidth = ref(0)
 const playCatch = ref(false)
@@ -201,8 +214,7 @@ const surpriseRet = ref<any>({})
 const config = ref({
   width: 750,
   height: 1400,
-  // url: backgroundMp4,
-  url: '/mp4/background.mp4?playsinline=1',
+  url: backgroundMp4,
   json: backgroundJSON,
   loop: true,
   useType: 2,
@@ -220,6 +232,36 @@ const mConfig = ref({
     openResult();
     playCatch.value = false
   },
+})
+const btnGroup = ref([
+  {
+    id: 1,
+    btnImage: Doll1Btn,
+    dollImage: Doll1Image,
+    active: true,
+  },
+  {
+    id: 2,
+    btnImage: Doll2Btn,
+    dollImage: Doll2Image,
+    active: false,
+  },
+  {
+    id: 3,
+    btnImage: Doll3Btn,
+    dollImage: Doll3Image,
+    active: false,
+  },
+  {
+    id: 4,
+    btnImage: Doll4Btn,
+    dollImage: Doll4Image,
+    active: false,
+  },
+])
+
+const activeBtn = computed(() => {
+  return btnGroup.value.filter(i => i.active)[0]
 })
 
 const leftTxt = computed(() => {
@@ -300,7 +342,7 @@ const handleRecharge = () => {
 }
 
 const getSurpriseVal = async () => {
-  const res = await dollActApi.getDollValue({ type: dollIdx.value }).catch(err => console.log(err))
+  const res = await dollActApi.getDollValue({ type: activeBtn.value.id }).catch(err => console.log(err))
   if (!res)
     return
   console.log('getSurpriseVal >', res)
@@ -319,7 +361,7 @@ const confirmCatch = async () => {
   //     playCatch.value = true
   //   }
   //   return
-  const res = await dollActApi.getLotteryPrize({ type: dollIdx.value, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
+  const res = await dollActApi.getLotteryPrize({ type: activeBtn.value.id, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
     console.log("err >", JSON.parse(err));
     if (JSON.parse(err)?.msg === "余额不足") {
       setTimeout(() => {
@@ -333,12 +375,12 @@ const confirmCatch = async () => {
   itemsRet.value = res.items;
   if (!Array.isArray(res.surprise)) {
     surpriseRet.value = res.surprise;
-  }else {
+  } else {
     surpriseRet.value = {}
   }
-  if(res.luck){
+  if (res.luck) {
     luckyRet.value = res.luck
-  }else {
+  } else {
     luckyRet.value = {}
   }
   if (!skipActive.value) { // 跳过
@@ -374,10 +416,10 @@ const openRecord = () => {
 
 const openDollDialog = () => {
   console.log("openDollDialog >============");
-  if(Object.keys(surpriseRet.value).length) {
+  if (Object.keys(surpriseRet.value).length) {
     dollDialogRef?.value?.openDialog(surpriseRet.value)
   }
-  if(Object.keys(luckyRet.value).length){
+  if (Object.keys(luckyRet.value).length) {
     dollDialogRef?.value?.openDialog(luckyRet.value)
   }
 }
@@ -395,6 +437,29 @@ const openDialog = (index: number) => {
     openSurprise()
 }
 
+const changeBtn = (type: number) => {
+  // 1 - 上一个  2 - 下一个
+  let idx = btnGroup.value.findIndex(i => i.active);
+  if (type === 1) {
+    if (idx <= 0) {
+      idx = 3
+    } else {
+      idx -= 1
+    }
+  }
+  if (type === 2) {
+    if (idx >= 3) {
+      idx = 0
+    } else {
+      idx += 1
+    }
+  }
+  btnGroup.value.forEach((item, index) => {
+    item.active = index === idx ? true : false
+  })
+  getSurpriseVal();
+}
+
 const getTaskReward = async (id: number) => {
   const res = await dollActApi.getTaskPrize({ task_id: id }).catch((err) => { console.log(err) })
   if (!res)
@@ -405,11 +470,11 @@ const getTaskReward = async (id: number) => {
 }
 
 // hook使用
-useHandleData(true, () => {
-})
+// useHandleData(true, () => {
+// })
 
 onMounted(() => {
-  // initPage()
+  initPage()
   // openDollDialog()
 })
 </script>
@@ -426,6 +491,18 @@ onMounted(() => {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes scale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.9);
   }
 }
 
@@ -464,7 +541,6 @@ onMounted(() => {
     .energy-icon {
       width: 76px;
       height: 76px;
-      background: url('@/assets/images/doll-activity/wawa-icon.webp') center center / cover no-repeat transparent;
       margin-bottom: 20px;
     }
 
@@ -493,7 +569,6 @@ onMounted(() => {
     top: 50px;
     position: absolute;
     z-index: 999;
-    // background-color: pink;
     overflow: hidden;
     height: auto;
 
@@ -508,21 +583,41 @@ onMounted(() => {
 
   .confirm-container {
     position: relative;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 1000px;
+    margin-bottom: 25px;
+
+    .pre-btn {
+      width: 65px;
+      height: 73px;
+      background: url('@/assets/images/doll-activity/pre-btn.webp') center center / cover no-repeat transparent;
+    }
+
+    .next-btn {
+      width: 65px;
+      height: 73px;
+      background: url('@/assets/images/doll-activity/next-btn.webp') center center / cover no-repeat transparent;
+    }
+
+    .pre-btn,
+    .next-btn {
+      animation: scale 1.5s linear 0s infinite;
+    }
 
     .confirm-btn {
-      margin-top: 1350px;
       width: 265px;
       height: 256px;
-      margin-bottom: 38px;
       border-radius: 50%;
-      background: url('@/assets/images/doll-activity/play-btn.webp') center center / cover no-repeat transparent;
     }
 
     .skip-btn {
       position: absolute;
       bottom: 20px;
-      right: -180px;
-      width: 130px;
+      right: -130px;
+      width: 200px;
+      background: transparent;
       height: 34px;
       font-weight: 500;
       color: #ff563f;
