@@ -216,7 +216,7 @@ const config = ref({
   width: 750,
   height: 1400,
   // url: backgroundMp4,
-  url: '/mp4/background.mp4',
+  url: '/mp4/background.mp4?playsinline=1',
   json: backgroundJSON,
   loop: true,
   useType: 2,
