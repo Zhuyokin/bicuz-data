@@ -30,8 +30,7 @@ const dialogVisible = ref(false)
 const setVisible = (bool) => {
   dialogVisible.value = bool
 }
-const openDialog = (tool) => {
-  console.log(tool)
+const openDialog = () => {
   dialogVisible.value = true
 }
 
