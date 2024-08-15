@@ -3,17 +3,11 @@
   <div class="container-box" ontouchstart="" onmouseover="">
     <!-- 顶部背景 -->
     <div class="header-bg">
-      <anim-player
-        :conf="config"
-        @ready="onReady"
-      />
+      <anim-player :conf="config" @ready="onReady" />
     </div>
     <div class="machine-box" v-if="!playCatch" />
-    <div class="catch-box" v-else >
-      <anim-player
-        :conf="mConfig"
-        @ready="onMReady"
-      />
+    <div class="catch-box" v-else>
+      <anim-player :conf="mConfig" @ready="onMReady" />
     </div>
     <!-- 能量条 -->
     <div v-motion-pop-visible-once class="energy-box" @click="openDialog(4)">
@@ -24,22 +18,17 @@
     </div>
     <!-- 右侧按钮组 -->
     <div v-motion-pop-visible-once class="btn-group">
-      <div
-        v-for="(item, index) in rightBtns"
-        :key="index" class="rule-btn item-btn scale-btn"
+      <div v-for="(item, index) in rightBtns" :key="index" class="rule-btn item-btn scale-btn"
         :style="`background:url(${item.pic})  center center / cover no-repeat transparent`"
-        @click="openDialog(index)"
-      />
+        @click="openDialog(index)" />
     </div>
     <div v-motion-pop-visible-once class="confirm-container">
       <!-- 确认按钮 -->
-      <div v-motion-pop-visible-once class="confirm-btn" @click="confirmCatch()" />
+      <div v-motion-pop-visible-once class="confirm-btn" @click="confirmCatch" />
       <!-- 跳过动画 -->
       <div class="skip-btn" @click="skipActive = !skipActive">
-        <div
-          class="skip-icon"
-          :style="`background:url(${skipActive ? skipConfirmBtn : skipCancelBtn})  center center / cover no-repeat transparent`"
-        />
+        <div class="skip-icon"
+          :style="`background:url(${skipActive ? skipConfirmBtn : skipCancelBtn})  center center / cover no-repeat transparent`" />
         <div class="skip-txt">
           跳过动画
         </div>
@@ -47,11 +36,9 @@
     </div>
     <!-- 选择抓取次数 -->
     <div v-motion-pop-visible-once class="times-box">
-      <div
-        v-for="(item, index) in getTimesTab" :key="index" class="times-item"
+      <div v-for="(item, index) in getTimesTab" :key="index" class="times-item"
         :style="`background:url(${item.active ? TimeBtnActive : TimeBtnInActive})  center center / cover no-repeat transparent`"
-        @click="changeTab(index)"
-      >
+        @click="changeTab(index)">
         <div class="times">
           抓{{ item.time }}次
         </div>
@@ -93,24 +80,20 @@
       </div>
       <div class="task-container">
         <div v-for="(item, index) in taskList" :key="index" class="task-item">
-          <div
-            class="task-img"
-            :style="`background:url(${prependHttpIfMissing(item.icon)})  center center / cover no-repeat transparent`"
-          />
+          <div class="task-img"
+            :style="`background:url(${prependHttpIfMissing(item.icon)})  center center / cover no-repeat transparent`" />
           <div class="task-name">
             {{ item.remark }}
           </div>
-          <div
-            class="task-status"
+          <div class="task-status"
             :class="[item.status === 0 ? 'task-status0' : item.status === 1 ? 'task-status1' : 'task-status2']"
-            @click="getTaskReward(item.id)"
-          />
+            @click="getTaskReward(item.id)" />
         </div>
       </div>
     </div>
     <div v-motion-pop-visible-once class="act-rule-box" />
     <!-- 福馈弹窗 -->
-    <ResultDialog ref="resultDialogRef" @success="initPage" />
+    <ResultDialog ref="resultDialogRef" @closeDialog="openDollDialog" />
     <!-- 惊喜娃娃 -->
     <SurpriseDialog ref="surpriseDialogRef" @success="initPage" />
     <!-- 奖品 -->
@@ -122,7 +105,7 @@
     <!-- 记录 -->
     <RecordDialog ref="recordDialogRef" @success="initPage" />
     <!-- 娃娃弹窗 -->
-    <DollDialog ref="dollDialogRef" :type="1" @success="initPage" />
+    <DollDialog ref="dollDialogRef" :type="1"  />
   </div>
 </template>
 
@@ -212,6 +195,9 @@ const dollIdx = ref(1)
 const dollValObj = ref({})
 const taskWidth = ref(0)
 const playCatch = ref(false)
+const itemsRet = ref({})
+const luckyRet = ref({})
+const surpriseRet = ref<any>({})
 const config = ref({
   width: 750,
   height: 1400,
@@ -329,33 +315,46 @@ const initPage = () => {
 }
 
 const confirmCatch = async () => {
-  if (!skipActive.value) { // 跳过
-      playCatch.value = true
+  // if (!skipActive.value) { // 跳过
+  //     playCatch.value = true
+  //   }
+  //   return
+  const res = await dollActApi.getLotteryPrize({ type: dollIdx.value, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
+    console.log("err >", JSON.parse(err));
+    if (JSON.parse(err)?.msg === "余额不足") {
+      setTimeout(() => {
+        handleRecharge()
+      }, 500)
     }
+  })
+  if (!res)
     return
-    const res = await dollActApi.getLotteryPrize({ type: dollIdx.value, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
-      console.log("err >",JSON.parse(err));
-      if(JSON.parse(err)?.msg === "余额不足"){
-        setTimeout(() => {
-          handleRecharge()
-        },500)
-      }
-    })
-    if (!res)
-      return
-    initPage()
-    if (!skipActive.value) { // 跳过
-      playCatch.value = true
-    }
-    console.log('confirmCatch >', res)
+  initPage()
+  itemsRet.value = res.items;
+  if (!Array.isArray(res.surprise)) {
+    surpriseRet.value = res.surprise;
+  }else {
+    surpriseRet.value = {}
+  }
+  if(res.luck){
+    luckyRet.value = res.luck
+  }else {
+    luckyRet.value = {}
+  }
+  if (!skipActive.value) { // 跳过
+    playCatch.value = true
+  } else {
+    openResult()
+  }
+  console.log('confirmCatch >', res)
 }
 
 const openResult = () => {
-  resultDialogRef?.value?.openDialog()
+  resultDialogRef?.value?.openDialog(itemsRet.value)
 }
 
 const openSurprise = () => {
-  surpriseDialogRef?.value?.openDialog()
+  surpriseDialogRef?.value?.openDialog(surpriseRet.value)
 }
 
 const openPrize = () => {
@@ -374,7 +373,13 @@ const openRecord = () => {
 }
 
 const openDollDialog = () => {
-  dollDialogRef?.value?.openDialog()
+  console.log("openDollDialog >============");
+  if(Object.keys(surpriseRet.value).length) {
+    dollDialogRef?.value?.openDialog(surpriseRet.value)
+  }
+  if(Object.keys(luckyRet.value).length){
+    dollDialogRef?.value?.openDialog(luckyRet.value)
+  }
 }
 
 const openDialog = (index: number) => {
@@ -404,7 +409,7 @@ const getTaskReward = async (id: number) => {
 // })
 
 onMounted(() => {
-  // initPage()
+  initPage()
   // openDollDialog()
 })
 </script>
@@ -448,8 +453,7 @@ onMounted(() => {
     top: 175px;
     left: -5px;
     position: absolute;
-    background: url('@/assets/images/doll-activity/left-energy-bg.webp') center
-      center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/left-energy-bg.webp') center center / cover no-repeat transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -460,8 +464,7 @@ onMounted(() => {
     .energy-icon {
       width: 76px;
       height: 76px;
-      background: url('@/assets/images/doll-activity/wawa-icon.webp') center
-        center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/wawa-icon.webp') center center / cover no-repeat transparent;
       margin-bottom: 20px;
     }
 
@@ -505,14 +508,14 @@ onMounted(() => {
 
   .confirm-container {
     position: relative;
+
     .confirm-btn {
       margin-top: 1350px;
       width: 265px;
       height: 256px;
       margin-bottom: 38px;
       border-radius: 50%;
-      background: url('@/assets/images/doll-activity/play-btn.webp') center
-        center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/play-btn.webp') center center / cover no-repeat transparent;
     }
 
     .skip-btn {
@@ -531,8 +534,7 @@ onMounted(() => {
         width: 28px;
         height: 28px;
         margin-right: 6px;
-        background: url('@/assets/images/doll-activity/skip-cancel.webp') center
-          center / cover no-repeat transparent;
+        background: url('@/assets/images/doll-activity/skip-cancel.webp') center center / cover no-repeat transparent;
       }
 
       .skip-txt {
@@ -589,16 +591,14 @@ onMounted(() => {
     .recharge {
       width: 169px;
       height: 61px;
-      background: url('@/assets/images/doll-activity/recharge-btn.webp') center
-        center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/recharge-btn.webp') center center / cover no-repeat transparent;
     }
   }
 
   .task-box {
     width: 676px;
     height: 593px;
-    background: url('@/assets/images/doll-activity/daily-task-bg.webp') center
-      center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/daily-task-bg.webp') center center / cover no-repeat transparent;
     border-radius: 20px;
     margin-bottom: 27px;
     display: flex;
@@ -656,8 +656,7 @@ onMounted(() => {
           left: 50%;
           transform: translateX(-50%);
           bottom: -10px;
-          background: url('@/assets/images/doll-activity/arrow-down.webp')
-            center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/arrow-down.webp') center center / cover no-repeat transparent;
         }
       }
 
@@ -689,8 +688,7 @@ onMounted(() => {
           width: 26px;
           height: 26px;
           border-radius: 50%;
-          background: url('@/assets/images/doll-activity/star-icon.webp') center
-            center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/star-icon.webp') center center / cover no-repeat transparent;
         }
 
         .progress-num {
@@ -746,18 +744,15 @@ onMounted(() => {
         }
 
         .task-status0 {
-          background: url('@/assets/images/doll-activity/notFinishBtn.webp')
-            center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/notFinishBtn.webp') center center / cover no-repeat transparent;
         }
 
         .task-status1 {
-          background: url('@/assets/images/doll-activity/getRewardBtn.webp')
-            center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/getRewardBtn.webp') center center / cover no-repeat transparent;
         }
 
         .task-status2 {
-          background: url('@/assets/images/doll-activity/hasFinishedBtn.webp')
-            center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/hasFinishedBtn.webp') center center / cover no-repeat transparent;
         }
       }
     }
@@ -767,8 +762,7 @@ onMounted(() => {
     width: 676px;
     height: 883px;
     border-radius: 20px;
-    background: url('@/assets/images/doll-activity/act-rule-bg.webp') center
-      center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/act-rule-bg.webp') center center / cover no-repeat transparent;
   }
 
   .header-bg {
@@ -776,6 +770,7 @@ onMounted(() => {
     top: 0;
     left: 0;
   }
+
   .machine-box,
   .catch-box {
     width: 100vw;
@@ -784,9 +779,9 @@ onMounted(() => {
     top: 0;
     left: 0;
   }
+
   .machine-box {
-    background: url('@/assets/images/doll-activity/machine.png') center center /
-      cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/machine.png') center center / cover no-repeat transparent;
   }
 
   :deep(canvas) {

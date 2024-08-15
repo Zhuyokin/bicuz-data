@@ -4,10 +4,10 @@
       <div class="body">
         <div class="close-btn" @click="close" />
         <div class="ret-box">
-          <div class="ret-item" v-for="i in 9" :key="i">
-            <div class="gift-pic"></div>
-            <div class="gift-name">礼物名字x1天</div>
-            <div class="gift-price">价值600钻</div>
+          <div class="ret-item" :class="[retList.length === 1 ? 'one' : '']" v-for="(item,index) in retList" :key="index">
+            <div class="gift-pic" :style="`background:url(${prependHttpIfMissing(item?.icon)})  center center / cover no-repeat transparent`"></div>
+            <div class="gift-name">{{ item.title }}</div>
+            <div class="gift-price">价值{{item.gift_diamond}}钻</div>
           </div>
         </div>
       </div>
@@ -17,18 +17,21 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
+const emits = defineEmits(['closeDialog'])
 const dialogVisible = ref(false)
+const retList = ref()
 const setVisible = (bool) => {
   dialogVisible.value = bool
 }
-const openDialog = (tool) => {
-  console.log(tool)
+const openDialog = (list: any[]) => {
+  retList.value = list;
   dialogVisible.value = true
 }
 
 const close = () => {
   setVisible(false)
+  console.log("close >");
+  emits('closeDialog')
 }
 
 defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
@@ -76,12 +79,13 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       width: 678px;
       height: 829px;
       background: url('@/assets/images/doll-activity/result-dialog.webp') center center /
         cover no-repeat transparent;
       font-size: 28px;
-      padding-top: 110px;
+      padding-top: 120px;
       position: relative;
       .close-btn {
         width: 68px;
@@ -93,9 +97,8 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         top: 20px;
       }
       .ret-box {
-        width: 560px;
+        max-width: 560px;
         min-height: 207px;
-        background-color: pink;
         display: flex;
         flex-wrap: wrap;
         .ret-item {
@@ -123,6 +126,9 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         }
         .ret-item:nth-child(3n+3) {
           margin-right: 0;
+        }
+        .ret-item.one {
+          margin-right: 0!important;
         }
       }
     }

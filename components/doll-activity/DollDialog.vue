@@ -8,12 +8,12 @@
           <div>你触发了{{ props.type === 1 ? '惊喜' : '幸运' }}娃娃事件，获得了奖励：</div>
         </div>
         <div class="gift-box">
-          <div class="gift-pic" />
+          <div class="gift-pic" :style="`background:url(${prependHttpIfMissing(gift?.gift_photo)})  center center / cover no-repeat transparent`"/>
           <div class="gift-name">
-            浪漫摩天轮
+            {{ gift?.gift_name }}
           </div>
           <div class="gift-price">
-            10000钻石
+            {{ gift?.gift_diamond }}钻石
           </div>
         </div>
       </div>
@@ -25,13 +25,14 @@
 import { ref } from 'vue'
 
 const props = defineProps<{ type: number }>()
+const gift = ref()
 
 const dialogVisible = ref(false)
 const setVisible = (bool) => {
   dialogVisible.value = bool
 }
-const openDialog = (tool) => {
-  console.log(tool)
+const openDialog = (giftObj) => {
+  gift.value = giftObj
   dialogVisible.value = true
 }
 
@@ -81,15 +82,16 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       color: #b04f00;
       font-weight: 600;
       position: relative;
+
       .close-btn {
         width: 68px;
         height: 63px;
-        background: url('@/assets/images/doll-activity/close-icon.webp') center
-          center / cover no-repeat transparent;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center center / cover no-repeat transparent;
         position: absolute;
         right: 0;
         top: 0;
       }
+
       .top-txt {
         line-height: 44px;
         width: 565px;
@@ -99,11 +101,13 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         flex-direction: column;
         margin-bottom: 24px;
       }
+
       .gift-box {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
+
       .gift-pic {
         width: 168px;
         height: 168px;
@@ -112,25 +116,27 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         background: #ffd399;
         margin-bottom: 15px;
       }
+
       .gift-name {
         color: #b04f00;
         font-weight: 500;
         font-size: 28px;
         margin-bottom: 5px;
       }
+
       .gift-price {
         font-size: 20px;
         font-weight: 400;
         color: #b04f00;
       }
     }
+
     .body.surprise {
-      background: url('@/assets/images/doll-activity/surprise-doll-dialog.webp')
-        center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/surprise-doll-dialog.webp') center center / cover no-repeat transparent;
     }
+
     .body.lucky {
-      background: url('@/assets/images/doll-activity/lucky-doll-dialog.webp')
-        center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/lucky-doll-dialog.webp') center center / cover no-repeat transparent;
     }
   }
 }
