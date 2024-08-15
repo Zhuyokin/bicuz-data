@@ -199,8 +199,8 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           position: relative;
           .name-info {
             color: #b04f00;
-            font-size: 32px;
-            font-weight: 500;
+            font-size: 30px;
+            font-weight: 600;
           }
           .avatar {
             width: 104px;
