@@ -44,21 +44,21 @@ import prize4Bg from '@/assets/images/doll-activity/prize4Bg.webp'
 const tabList = ref([
   {
     id: 1,
-    name: "Mi小咪",
+    name: "Mi小橘",
     active: true,
-    giftBg: prize1Bg,
-    color: "#FF6A68",
+    color: "#FF6CB4",
+    giftBg: prize2Bg,
     maxGift: {
       rate: 0.88,
       name: "月光女孩",
-      value: 18800,
+      value: 18801,
       pic: null,
     },
     gifts: [
       {
         id: 1,
         rate: 0.88,
-        name: "礼物1",
+        name: "礼物2",
         value: 600,
         pic: null,
       },
@@ -87,21 +87,21 @@ const tabList = ref([
   },
   {
     id: 2,
-    name: "Mi小橘",
+    name: "Mi小美",
     active: false,
-    color: "#FF6CB4",
-    giftBg: prize2Bg,
+    color: "#B366FF",
+    giftBg: prize4Bg,
     maxGift: {
       rate: 0.88,
       name: "月光女孩",
-      value: 18801,
+      value: 18803,
       pic: null,
     },
     gifts: [
       {
         id: 1,
         rate: 0.88,
-        name: "礼物2",
+        name: "礼物1",
         value: 600,
         pic: null,
       },
@@ -173,14 +173,14 @@ const tabList = ref([
   },
   {
     id: 4,
-    name: "Mi小美",
+    name: "Mi小咪",
     active: false,
-    color: "#B366FF",
-    giftBg: prize4Bg,
+    giftBg: prize1Bg,
+    color: "#FF6A68",
     maxGift: {
       rate: 0.88,
       name: "月光女孩",
-      value: 18803,
+      value: 18800,
       pic: null,
     },
     gifts: [

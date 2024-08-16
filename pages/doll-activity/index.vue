@@ -1,17 +1,24 @@
 <template>
   <!-- 抓娃娃活动 -->
   <div class="container-box" ontouchstart="" onmouseover="">
+    <!-- 返回按钮 -->
+    <div class="back-wrap cursor-pointer" @click="handleBack">
+      <img :src="backIcon" alt="">
+    </div>
     <!-- 顶部背景 -->
     <div class="header-bg">
       <anim-player :conf="config" @ready="onReady" />
     </div>
-    <div class="machine-box" v-if="!playCatch" />
-    <div class="catch-box" v-else>
+    <!-- v-if="!playCatch" -->
+    <div class="machine-box" v-if="!playCatch" :style="{ opacity: playCatch ? '0' : '1' }" />
+    <!-- v-else -->
+    <div class="catch-box" :style="{ opacity: playCatch ? '1' : '0' }">
       <anim-player :conf="mConfig" @ready="onMReady" />
     </div>
     <!-- 能量条 -->
     <div v-motion-pop-visible-once class="energy-box" @click="openDialog(4)">
-      <div class="energy-icon" :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`"/>
+      <div class="energy-icon"
+        :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`" />
       <div class="energy-bar-box">
         <div class="complete" :style="`height: ${dollValObj?.surprise_value}%`" />
       </div>
@@ -147,6 +154,8 @@ import Doll1Image from '@/assets/images/doll-activity/doll1.webp'
 import Doll2Image from '@/assets/images/doll-activity/doll2.webp'
 import Doll3Image from '@/assets/images/doll-activity/doll3.webp'
 import Doll4Image from '@/assets/images/doll-activity/doll4.webp'
+import { throttle } from '@/utils/index'
+import backIcon from '@/assets/images/common/back-icon.webp'
 
 const rightBtns = ref([
   {
@@ -229,8 +238,10 @@ const mConfig = ref({
   useType: 2,
   accurate: false,
   onEnded: () => {
-    openResult();
-    playCatch.value = false
+    if (playCatch.value) {
+      openResult();
+      playCatch.value = false
+    }
   },
 })
 const btnGroup = ref([
@@ -259,6 +270,11 @@ const btnGroup = ref([
     active: false,
   },
 ])
+
+
+const handleBack = () => {
+  js_sync_back()
+}
 
 const activeBtn = computed(() => {
   return btnGroup.value.filter(i => i.active)[0]
@@ -356,11 +372,14 @@ const initPage = () => {
   getSurpriseVal()
 }
 
-const confirmCatch = async () => {
+const catchDoll = async () => {
   // if (!skipActive.value) { // 跳过
+  //   mConfig.value = Object.assign(mConfig.value, {any: Math.random()})
+  //   setTimeout(() => {
   //     playCatch.value = true
-  //   }
-  //   return
+  //   },200)
+  // }
+  // return
   const res = await dollActApi.getLotteryPrize({ type: activeBtn.value.id, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
     console.log("err >", JSON.parse(err));
     if (JSON.parse(err)?.msg === "余额不足") {
@@ -384,12 +403,19 @@ const confirmCatch = async () => {
     luckyRet.value = {}
   }
   if (!skipActive.value) { // 跳过
-    playCatch.value = true
+    mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
+    setTimeout(() => {
+      playCatch.value = true
+    }, 200)
   } else {
     openResult()
   }
   console.log('confirmCatch >', res)
 }
+
+const confirmCatch = throttle(() => {
+  catchDoll()
+}, 1000)
 
 const openResult = () => {
   resultDialogRef?.value?.openDialog(itemsRet.value)
@@ -507,6 +533,20 @@ onMounted(() => {
 }
 
 .container-box {
+  .back-wrap {
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    top: 103px;
+    left: 37px;
+    z-index: 9;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
