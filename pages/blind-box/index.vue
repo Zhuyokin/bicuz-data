@@ -26,7 +26,7 @@
       </div>
       <div class="loginMain">
         <div class="loginHead">
-          <div class="loginTitle">请使用团团语音账号登录</div>
+          <div class="loginTitle">请使用AIMI语音账号登录</div>
           <div class="loginIcon"><img src="@/assets/images/blindBox/logo.png" /></div>
         </div>
         <div class="loginCenter">

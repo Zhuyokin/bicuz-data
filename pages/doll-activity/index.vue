@@ -593,12 +593,14 @@ onMounted(() => {
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      box-sizing: border-box;
 
       .complete {
-        width: 17px;
-        border-radius: 40px;
+        width: 14px;
+        border-radius: 20px;
         background: linear-gradient(180deg, #ff3516 0%, #ff918b 100%),
           rgba(255, 255, 255, 0.8);
+        transform: translateX(-.5px);
       }
     }
   }
