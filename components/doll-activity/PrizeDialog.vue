@@ -11,43 +11,45 @@
           </div>
         </div>
 
-        <div class="max-value" :style="`background:${activeTab.color}`">
-          最高可获得{{ activeTab.maxGift?.value }}钻石礼物
-        </div>
-
-        <div
-          class="max-gift"
-          :style="`background:url(${activeTab.giftBg})  center center / cover no-repeat transparent`"
-        >
-          <div class="rate">
-            {{ activeTab.maxGift?.rate }}%
+        <div class="tabBottom">
+          <div class="max-value" :style="`background:${activeTab.color}`">
+            最高可获得{{ activeTab.maxGift?.value }}钻石礼物
           </div>
 
-          <div class="gift-pic" :style="`background:url(${activeTab.maxGift?.pic})  center center / cover no-repeat transparent`" />
-
-          <div class="name-val">
-            <div class="name">
-              {{ activeTab.maxGift?.name }}
-            </div>
-            <div class="val">
-              {{ activeTab.maxGift?.value }}钻石
-            </div>
-          </div>
-        </div>
-
-        <div class="gift-group">
-          <div v-for="(item, index) in activeTab.gifts" :key="index" class="gift-item">
+          <div
+            class="max-gift"
+            :style="`background:url(${activeTab.giftBg})  center center / cover no-repeat transparent`"
+          >
             <div class="rate">
-              {{ item.rate }}%
+              {{ activeTab.maxGift?.rate }}%
             </div>
-            <div class="pic">
-              <div class="prize-img" :style="`background:url(${item?.pic})  center center / cover no-repeat transparent`" />
+
+            <div class="gift-pic" :style="`background:url(${activeTab.maxGift?.pic})  center center / cover no-repeat transparent`" />
+
+            <div class="name-val">
+              <div class="name">
+                {{ activeTab.maxGift?.name }}
+              </div>
+              <div class="val">
+                {{ activeTab.maxGift?.value }}钻石
+              </div>
             </div>
-            <div class="name">
-              {{ item.name }}
-            </div>
-            <div class="value">
-              价值{{ item.value }}钻石
+          </div>
+
+          <div class="gift-group">
+            <div v-for="(item, index) in activeTab.gifts" :key="index" class="gift-item">
+              <div class="rate">
+                {{ item.rate }}%
+              </div>
+              <div class="pic">
+                <div class="prize-img" :style="`background:url(${item?.pic})  center center / cover no-repeat transparent`" />
+              </div>
+              <div class="name">
+                {{ item.name }}
+              </div>
+              <div class="value">
+                价值{{ item.value }}钻石
+              </div>
             </div>
           </div>
         </div>
@@ -480,6 +482,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         }
       }
 
+      .tabBottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        overflow-y: scroll;
+        height: 800px;
+      }
+
       .max-value {
         width: 304px;
         height: 36px;
@@ -548,10 +559,6 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         justify-content: space-between;
         flex-wrap: wrap;
         align-content: flex-start;
-        overflow: hidden;
-        overflow-y: scroll;
-        height: 400px;
-
         .gift-item {
           display: flex;
           flex-direction: column;

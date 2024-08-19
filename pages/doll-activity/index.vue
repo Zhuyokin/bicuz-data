@@ -512,7 +512,6 @@ const getTaskReward = async (id: number) => {
 
 onMounted(() => {
   initPage()
-  // openDollDialog()
 })
 </script>
 
