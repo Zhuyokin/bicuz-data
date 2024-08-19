@@ -8,12 +8,12 @@
           注:每个奖池的惊喜娃娃进度独立计算.
         </div>
         <div class="gift-box">
-          <div class="gift-pic" />
+          <div class="gift-pic" :style="`background:url(${fwca})  center center / cover no-repeat transparent`" />
           <div class="gift-name">
-            浪漫摩天轮
+            枫舞长安
           </div>
           <div class="gift-price">
-            10000钻石
+            18800钻石
           </div>
         </div>
         <div class="clown-l" />
@@ -25,6 +25,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import fwca from '@/assets/images/doll-activity/prize/fwca.png'
 
 const dialogVisible = ref(false)
 const setVisible = (bool) => {
