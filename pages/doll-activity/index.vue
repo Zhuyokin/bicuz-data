@@ -398,7 +398,7 @@ const catchDoll = async () => {
     if (JSON.parse(err)?.msg === '余额不足') {
       setTimeout(() => {
         handleRecharge()
-      }, 800)
+      }, 500)
     }
   })
   if (!res)
@@ -419,7 +419,7 @@ const catchDoll = async () => {
     mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
     setTimeout(() => {
       playCatch.value = true
-    }, 200)
+    }, 1000)
   }
   else {
     openResult()
