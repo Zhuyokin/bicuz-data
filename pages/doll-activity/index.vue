@@ -174,7 +174,6 @@ import Doll1Image from '@/assets/images/doll-activity/doll1.webp'
 import Doll2Image from '@/assets/images/doll-activity/doll2.webp'
 import Doll3Image from '@/assets/images/doll-activity/doll3.webp'
 import Doll4Image from '@/assets/images/doll-activity/doll4.webp'
-
 import backIcon from '@/assets/images/common/back-icon.webp'
 
 const rightBtns = ref([
