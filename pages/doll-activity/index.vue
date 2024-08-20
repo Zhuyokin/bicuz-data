@@ -398,7 +398,7 @@ const catchDoll = async () => {
     if (JSON.parse(err)?.msg === '余额不足') {
       setTimeout(() => {
         handleRecharge()
-      }, 500)
+      }, 800)
     }
   })
   if (!res)
