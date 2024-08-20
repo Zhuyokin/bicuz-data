@@ -46,13 +46,16 @@
                 </div>
                 <!-- 图片 -->
                 <div
+                  v-if="item?.config"
                   class="prize-pic"
-                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
                 >
-                  <!--
-                  <anim-player :conf="i.config" @ready="(player) => player.player.start()" />
-                 -->
+                  <anim-player v-if="item.config" :conf="item.config" @ready="(player) => player.player.start()" />
                 </div>
+                <div
+                  v-else
+                  class="prize-pic"
+                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
+                />
                 <div class="gift-name">
                   {{ item?.name }}x{{ item?.day }}
                 </div>
@@ -109,13 +112,18 @@ const getMall = async (type: number) => {
     giftList.value = res.list
   if (type === 2) {
     dressList.value = res.list.map((i) => {
-      return {
-        ...i,
-        config: {
-          url: prependHttpIfMissing(i.image),
-          loop: false,
-          useType: 2,
-        },
+      if (i.image.includes('.svga')) {
+        return {
+          ...i,
+          config: {
+            url: prependHttpIfMissing(i.image),
+            loop: true,
+            useType: 2,
+          },
+        }
+      }
+      else {
+        return { ...i }
       }
     })
   }
