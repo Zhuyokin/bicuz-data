@@ -49,7 +49,9 @@
                   class="prize-pic"
                   :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
                 >
+                  <!--
                   <anim-player :conf="i.config" @ready="(player) => player.player.start()" />
+                 -->
                 </div>
                 <div class="gift-name">
                   {{ item?.name }}x{{ item?.day }}
