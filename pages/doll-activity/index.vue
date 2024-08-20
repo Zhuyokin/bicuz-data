@@ -10,7 +10,7 @@
       <anim-player :conf="config" @ready="onReady" />
     </div>
     <!-- v-if="!playCatch" -->
-    <div v-if="!playCatch" class="machine-box" :style="{ opacity: playCatch ? '0' : '1' }" />
+    <div class="machine-box" :style="{ opacity: playCatch ? '0' : '1' }" />
     <!-- v-else -->
     <div class="catch-box" :style="{ opacity: playCatch ? '1' : '0' }">
       <anim-player :conf="mConfig" @ready="onMReady" />
@@ -241,6 +241,7 @@ const config = ref({
   useType: 2,
   accurate: false,
 })
+
 const mConfig = ref({
   width: 750,
   height: 1400,
@@ -256,6 +257,7 @@ const mConfig = ref({
     }
   },
 })
+
 const btnGroup = ref([
   {
     id: 1,
@@ -305,11 +307,13 @@ const leftTxt = computed(() => {
 const onReady = (player) => {
   player.player.play()
 }
+
 const onMReady = (player) => {
   setTimeout(() => {
     player.player.play()
   }, 100)
 }
+
 const roundToOneDecimal = (number: number) => {
   return Number(number.toFixed(1))
 }
@@ -423,7 +427,7 @@ const catchDoll = async () => {
     mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
     setTimeout(() => {
       playCatch.value = true
-    }, 500)
+    }, 400)
   }
   else {
     openResult()
@@ -827,7 +831,7 @@ onMounted(() => {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        transform: translateY(20px);
+        transform: translateY(23px);
 
         .red-dot-box {
           width: 26px;
@@ -858,13 +862,18 @@ onMounted(() => {
           font-size: 28px;
         }
       }
+      .progress-item {
+        transform: translate(-6px, 23px);
+      }
 
       .progress-item.first {
         align-items: flex-start;
+        transform: translate(0px, 23px);
       }
 
       .progress-item:last-child {
         align-items: flex-end;
+        transform: translate(0px, 23px);
       }
     }
 

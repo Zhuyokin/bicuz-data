@@ -38,7 +38,7 @@
                   :style="`background:url(${prependHttpIfMissing(iItem.gift_photo)})  center center / cover no-repeat transparent`"
                 />
                 <div class="gift-name">
-                  {{ iItem.gift_name }}
+                  {{ iItem.gift_name }} ×  {{ iItem.number }}
                 </div>
                 <div class="gift-price">
                   {{ iItem.gift_diamond }}钻石

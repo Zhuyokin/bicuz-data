@@ -57,9 +57,9 @@
                   :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
                 />
                 <div class="gift-name">
-                  {{ item?.name }}x{{ item?.day }}天
+                  {{ item?.name }} <span v-if="item?.day">x{{ item?.day }}天</span>
                 </div>
-                <div class="gift-price">
+                <div class="gift-price" :style="`opacity: ${item?.zs ? '1' : '0'}`">
                   价值{{ item?.zs }}钻
                 </div>
                 <div class="receive-btn" @click="openReceive(item)" />
