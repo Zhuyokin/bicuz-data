@@ -69,6 +69,7 @@
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
   },
   "dependencies": {
-    "@vueuse/motion": "^2.2.3"
+    "@vueuse/motion": "^2.2.3",
+    "core-js": "^3.38.0"
   }
 }
