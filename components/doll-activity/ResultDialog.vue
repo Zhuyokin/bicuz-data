@@ -85,7 +85,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       background: url('@/assets/images/doll-activity/result-dialog.webp') center
         center / cover no-repeat transparent;
       font-size: 28px;
-      padding-top: 120px;
+      padding-top: 170px;
       position: relative;
       .close-btn {
         width: 68px;

@@ -15,8 +15,8 @@
     <div class="catch-box" :style="{ opacity: playCatch ? '1' : '0' }">
       <anim-player :conf="mConfig" @ready="onMReady" />
     </div>
-    <!-- 能量条 v-motion-slide-bottom -->
-    <div v-motion-slide-bottom class="energy-box" @click="openDialog(4)">
+    <!-- 能量条  -->
+    <div v-motion-pop-visible-once class="energy-box" @click="openDialog(4)">
       <div
         class="energy-icon"
         :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`"
@@ -26,20 +26,19 @@
       </div>
     </div>
     <!-- 右侧按钮组 -->
-    <!-- v-motion-slide-bottom -->
-    <div class="btn-group">
+    <div v-motion-pop-visible-once class="btn-group">
       <div
         v-for="(item, index) in rightBtns" :key="index" class="rule-btn item-btn scale-btn"
         :style="`background:url(${item.pic})  center center / cover no-repeat transparent`"
         @click="openDialog(index)"
       />
     </div>
-    <!-- v-motion-slide-bottom  -->
-    <div class="confirm-container">
+    <div v-motion-pop-visible-once class="confirm-container">
       <!-- 上一个按钮 -->
       <div class="pre-btn" @click="changeBtn(1)" />
-      <!-- 确认按钮   v-motion-slide-bottom -->
+      <!-- 确认按钮  -->
       <div
+        v-motion-pop-visible-once
         :style="`background:url(${activeBtn.btnImage})  center center / cover no-repeat transparent`"
         class="confirm-btn" @click="confirmCatch"
       />
@@ -57,8 +56,7 @@
       </div>
     </div>
     <!-- 选择抓取次数 -->
-    <!-- v-motion-slide-bottom -->
-    <div class="times-box">
+    <div v-motion-pop-visible-once class="times-box">
       <div
         v-for="(item, index) in getTimesTab" :key="index" class="times-item"
         :style="`background:url(${item.active ? TimeBtnActive : TimeBtnInActive})  center center / cover no-repeat transparent`"
@@ -73,8 +71,7 @@
       </div>
     </div>
     <!-- 我的账号 -->
-    <!-- v-motion-slide-bottom -->
-    <div class="my-account">
+    <div v-motion-pop-visible-once class="my-account">
       <div>我的钻石：</div>
       <div class="diamond-num">
         {{ diamond }}
@@ -82,8 +79,7 @@
       <div class="recharge" @click="handleRecharge" />
     </div>
     <!-- 每日任务 -->
-    <!-- v-motion-slide-bottom -->
-    <div class="task-box">
+    <div v-motion-pop-visible-once class="task-box">
       <div class="task-sub-title">
         每抓取1次娃娃增加1点进度值，当进度值达标即可领取相应奖励
       </div>
@@ -122,8 +118,7 @@
         </div>
       </div>
     </div>
-    <!-- v-motion-slide-bottom -->
-    <div class="act-rule-box" />
+    <div v-motion-pop-visible-once class="act-rule-box" />
     <!-- 福馈弹窗 -->
     <ResultDialog ref="resultDialogRef" @close-dialog="openDollDialog" />
     <!-- 惊喜娃娃 -->
