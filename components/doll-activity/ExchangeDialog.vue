@@ -246,7 +246,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         flex-wrap: wrap;
         align-content: flex-start;
         overflow: hidden;
-        overflow-y: scroll;
+        // overflow-y: scroll;
 
         .prize-item {
           width: 168px;

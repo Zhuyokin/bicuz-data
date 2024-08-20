@@ -672,6 +672,7 @@ onMounted(() => {
       width: 265px;
       height: 256px;
       border-radius: 50%;
+      z-index: 999;
     }
 
     .skip-btn {
@@ -710,7 +711,7 @@ onMounted(() => {
     align-items: center;
     gap: 24px;
     margin-bottom: 40px;
-    z-index: 9999;
+    z-index: 999;
 
     .times-item {
       width: 210px;
