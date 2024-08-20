@@ -5,7 +5,9 @@
         <div class="close-btn" @click="close" />
         <div class="ret-box">
           <div v-for="(item, index) in retList" :key="index" class="ret-item" :class="[retList.length === 1 ? 'one' : '']">
-            <div class="gift-pic" :style="`background:url(${prependHttpIfMissing(item?.icon)})  center center / cover no-repeat transparent`" />
+            <div class="gift-pic">
+              <div class="prize" :style="`background:url(${item.giftId ? prependHttpIfMissing(item?.icon) : debrisImg})  center center / cover no-repeat transparent`" />
+            </div>
             <div v-if="item.giftId" class="gift-name">
               {{ item.title }}
             </div>
@@ -24,6 +26,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import debrisImg from '@/assets/images/doll-activity/debris-icon.webp'
 
 const emits = defineEmits(['closeDialog'])
 const dialogVisible = ref(false)
@@ -111,7 +114,14 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
             height: 131px;
             background-color: #ffd399;
             border-radius: 24px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .prize {
+              width: 108px;
+              height: 108px;
+            }
           }
           .gift-name {
             font-size: 22px;
