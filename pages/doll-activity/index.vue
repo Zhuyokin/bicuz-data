@@ -308,7 +308,9 @@ const onReady = (player) => {
   player.player.play()
 }
 const onMReady = (player) => {
-  player.player.play()
+  setTimeout(() => {
+    player.player.play()
+  }, 500)
 }
 const setWidth = () => {
   let width = 0
@@ -417,9 +419,10 @@ const catchDoll = async () => {
 
   if (!skipActive.value) { // 跳过
     mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
-    setTimeout(() => {
-      playCatch.value = true
-    }, 1000)
+    playCatch.value = true
+    // setTimeout(() => {
+    //   playCatch.value = true
+    // }, 1000)
   }
   else {
     openResult()
