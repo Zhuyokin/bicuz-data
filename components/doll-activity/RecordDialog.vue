@@ -11,8 +11,7 @@
         <div v-if="recordList.length" class="list-box">
           <div v-for="(item, index) in recordList" :key="index" class="record-item">
             <div class="avatar" :style="`background:url(${prependHttpIfMissing(item?.face)})  center center / cover no-repeat transparent`" @click="toUserCenter(item.user_id)" />
-
-            <div class="name-info">
+            <div v-if="item?.contentTxt || item?.reward" class="name-info">
               <div class="name">
                 {{ item.nickname }}
               </div>
@@ -20,10 +19,10 @@
                 <span v-if="activeTabIdx === 1" class="title">在娃娃机里获得了</span>
                 <span v-else class="title">在兑换商城里兑换了</span>
                 <span v-if="activeTabIdx === 1">
-                  {{ item.contentTxt }}
+                  {{ item?.contentTxt }}
                 </span>
                 <span v-else>
-                  {{ item.id ? item?.reward : `碎片${item?.reward}` }}
+                  {{ item?.reward }}
                 </span>
               </div>
             </div>
@@ -68,10 +67,17 @@ const getMyRecord = async () => {
   const res = await dollActApi.getMyLog({ page: 1, pagesize: 999 }).catch(err => console.log(err))
   if (!res)
     return
-  recordList.value = res.list
+
+  res.list.forEach((item, index) => {
+    item.content.forEach((i) => {
+      if (!i.giftId)
+        i.title = `碎片${i.title}`
+    })
+  })
   res.list.forEach((i) => {
     i.contentTxt = i.content.map(i => i.title).join(',')
   })
+  recordList.value = res.list
 }
 
 const getExchangeRecord = async () => {
