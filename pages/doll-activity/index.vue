@@ -313,7 +313,7 @@ const onMReady = (player) => {
 const setWidth = () => {
   let width = 0
   if (taskNum.value <= taskList.value[0].number)
-    width = (taskNum.value - 0) / (taskList.value[0].number - 0) * 100
+    width = (taskNum.value - 0) / (taskList.value[0].number - 0) * 100 * 0.25
 
   else if (taskNum.value <= taskList.value[1].number)
     width = (taskNum.value - taskList.value[0].number) / (taskList.value[1].number - taskList.value[0].number) * 25 + 25
@@ -335,6 +335,7 @@ const getTasks = async () => {
   console.log('getTasks >', res)
   taskList.value = res.list
   taskNum.value = res.my_number
+  // taskNum.value = 197
   setWidth()
 }
 

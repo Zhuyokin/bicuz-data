@@ -85,7 +85,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       background: url('@/assets/images/doll-activity/result-dialog.webp') center
         center / cover no-repeat transparent;
       font-size: 28px;
-      padding-top: 170px;
+      padding-top: 160px;
       position: relative;
       .close-btn {
         width: 68px;
@@ -114,7 +114,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
             height: 131px;
             background-color: #ffd399;
             border-radius: 24px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -125,7 +125,6 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           }
           .gift-name {
             font-size: 22px;
-            margin-bottom: 5px;
           }
           .gift-price {
             font-size: 20px;
