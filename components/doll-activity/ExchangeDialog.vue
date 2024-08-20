@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="exchange-dialog">
     <div class="fullPageDialog">
       <van-dialog v-model:show="show" class="fullPagePop" :show-confirm-button="false" :show-cancel-button="false">
         <div class="content">
@@ -80,6 +80,7 @@
 import { ref } from 'vue'
 import { dollActApi } from '~/api'
 import ConfirmExDialog from '~/components/doll-activity/ConfirmExDialog.vue'
+import testSVGA from '@/assets/images/doll-activity/test.svga?url'
 import animPlayer from '@/components/anim-player/index.vue'
 
 const props = defineProps<{
@@ -119,8 +120,6 @@ const getMall = async (type: number) => {
             url: prependHttpIfMissing(i.image),
             loop: true,
             useType: 2,
-            width: 108,
-            height: 108,
           },
         }
       }
@@ -260,10 +259,6 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
           flex-direction: column;
           align-items: center;
           margin: 0 25px 25px 0;
-          :deep(canvas) {
-            width: 108px !important;
-            height: 108px !important;
-          }
 
           .parts-item {
             display: flex;
@@ -296,6 +291,9 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
             border-radius: 24px;
             background: #ffd399;
             margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
 
           .gift-name {
@@ -329,6 +327,12 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         margin: 0 auto 50px;
       }
     }
+  }
+}
+#exchange-dialog {
+  :deep(canvas) {
+    width: 90% !important;
+    height: 90% !important;
   }
 }
 </style>
