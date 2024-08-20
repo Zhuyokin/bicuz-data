@@ -293,13 +293,13 @@ const activeBtn = computed(() => {
 
 const leftTxt = computed(() => {
   if (taskNum.value <= taskList.value[0].number)
-    return (taskList.value[0].number - taskNum.value)
+    return (taskNum.value === taskList.value[0].number ? taskList.value[1].number - taskNum.value : taskList.value[0].number - taskNum.value)
   else if (taskNum.value <= taskList.value[1].number)
-    return (taskList.value[1].number - taskNum.value)
+    return (taskNum.value === taskList.value[1].number ? taskList.value[2].number - taskNum.value : taskList.value[1].number - taskNum.value)
   else if (taskNum.value <= taskList.value[2].number)
-    return (taskList.value[2].number - taskNum.value)
+    return (taskNum.value === taskList.value[2].number ? taskList.value[3].number - taskNum.value : taskList.value[2].number - taskNum.value)
   else if (taskNum.value <= taskList.value[3].number)
-    return (taskList.value[3].number - taskNum.value)
+    return (taskNum.value === taskList.value[3].number ? 100 : taskList.value[3].number - taskNum.value)
 })
 
 const onReady = (player) => {
@@ -310,19 +310,23 @@ const onMReady = (player) => {
     player.player.play()
   }, 100)
 }
+const roundToOneDecimal = (number: number) => {
+  return Number(number.toFixed(1))
+}
+
 const setWidth = () => {
   let width = 0
   if (taskNum.value <= taskList.value[0].number)
-    width = (taskNum.value - 0) / (taskList.value[0].number - 0) * 100 * 0.25
+    width = taskNum.value === taskList.value[0].number ? 25 : roundToOneDecimal(taskNum.value / taskList.value[0].number * 25)
 
   else if (taskNum.value <= taskList.value[1].number)
-    width = (taskNum.value - taskList.value[0].number) / (taskList.value[1].number - taskList.value[0].number) * 25 + 25
+    width = taskNum.value === taskList.value[1].number ? 50 : roundToOneDecimal((taskNum.value - taskList.value[0].number) / (taskList.value[1].number - taskList.value[0].number) * 25) + 25
 
   else if (taskNum.value <= taskList.value[2].number)
-    width = (taskNum.value - taskList.value[1].number) / (taskList.value[2].number - taskList.value[1].number) * 25 + 25 * 2
+    width = taskNum.value === taskList.value[2].number ? 75 : roundToOneDecimal((taskNum.value - taskList.value[1].number) / (taskList.value[2].number - taskList.value[1].number) * 25) + 25 * 2
 
   else if (taskNum.value <= taskList.value[3].number)
-    width = (taskNum.value - taskList.value[2].number) / (taskList.value[3].number - taskList.value[2].number) * 25 + 25 * 3
+    width = taskNum.value === taskList.value[3].number ? 100 : roundToOneDecimal((taskNum.value - taskList.value[2].number) / (taskList.value[3].number - taskList.value[2].number) * 25) + 25 * 3
   else
     width = 100
   taskWidth.value = width
@@ -335,7 +339,6 @@ const getTasks = async () => {
   console.log('getTasks >', res)
   taskList.value = res.list
   taskNum.value = res.my_number
-  // taskNum.value = 197
   setWidth()
 }
 
