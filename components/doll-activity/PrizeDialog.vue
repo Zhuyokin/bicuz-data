@@ -3,31 +3,54 @@
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
         <div class="tabList">
-          <div class="tabName" @click="changeTab(index + 1)" :class="[item.active ? 'active' : '']"
-            v-for="(item, index) in tabList">{{ item.name }}
+          <div
+            v-for="(item, index) in tabList" class="tabName" :class="[item.active ? 'active' : '']"
+            @click="changeTab(index + 1)"
+          >
+            {{ item.name }}
           </div>
         </div>
 
-        <div class="max-value" :style="`background:${activeTab.color}`">
-          最高可获得{{ activeTab.maxGift?.value }}钻石礼物
-        </div>
-
-        <div class="max-gift"
-          :style="`background:url(${activeTab.giftBg})  center center / cover no-repeat transparent`">
-          <div class="rate">{{ activeTab.maxGift?.rate }}%</div>
-
-          <div class="name-val">
-            <div class="name">{{ activeTab.maxGift?.name }}</div>
-            <div class="val">{{ activeTab.maxGift?.value }}钻石</div>
+        <div class="tabBottom">
+          <div class="max-value" :style="`background:${activeTab.color}`">
+            最高可获得{{ activeTab.maxGift?.value }}钻石礼物
           </div>
-        </div>
 
-        <div class="gift-group">
-          <div class="gift-item" v-for="(item, index) in activeTab.gifts" :key="index">
-            <div class="rate">{{ item.rate }}%</div>
-            <div class="pic"></div>
-            <div class="name">{{ item.name }}</div>
-            <div class="value">价值{{ item.value }}钻石</div>
+          <div
+            class="max-gift"
+            :style="`background:url(${activeTab.giftBg})  center center / cover no-repeat transparent`"
+          >
+            <div class="rate">
+              {{ activeTab.maxGift?.rate }}%
+            </div>
+
+            <div class="gift-pic" :style="`background:url(${activeTab.maxGift?.pic})  center center / cover no-repeat transparent`" />
+
+            <div class="name-val">
+              <div class="name">
+                {{ activeTab.maxGift?.name }}
+              </div>
+              <div class="val">
+                {{ activeTab.maxGift?.value }}钻石
+              </div>
+            </div>
+          </div>
+
+          <div class="gift-group">
+            <div v-for="(item, index) in activeTab.gifts" :key="index" class="gift-item">
+              <div class="rate">
+                {{ item.rate }}%
+              </div>
+              <div class="pic">
+                <div class="prize-img" :style="`background:url(${item?.pic})  center center / cover no-repeat transparent`" />
+              </div>
+              <div class="name">
+                {{ item.name }}
+              </div>
+              <div class="value">
+                价值{{ item.value }}钻石
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -41,179 +64,332 @@ import prize1Bg from '@/assets/images/doll-activity/prize1Bg.webp'
 import prize2Bg from '@/assets/images/doll-activity/prize2Bg.webp'
 import prize3Bg from '@/assets/images/doll-activity/prize3Bg.webp'
 import prize4Bg from '@/assets/images/doll-activity/prize4Bg.webp'
+import sp from '@/assets/images/doll-activity/prize/sp.png'
+import mfb from '@/assets/images/doll-activity/prize/mfb.png'
+import tmxq from '@/assets/images/doll-activity/prize/tmxq.png'
+import xgxm from '@/assets/images/doll-activity/prize/xgxm.png'
+import xsxg from '@/assets/images/doll-activity/prize/xsxg.png'
+import xxfl from '@/assets/images/doll-activity/prize/xxfl.png'
+import xxw from '@/assets/images/doll-activity/prize/xxw.png'
+import yyjt from '@/assets/images/doll-activity/prize/yyjt.png'
+import fll from '@/assets/images/doll-activity/prize/3dfll.png'
+import jnh from '@/assets/images/doll-activity/prize/jnh.png'
+import hkmj from '@/assets/images/doll-activity/prize/hkmj.png'
+import gnzw from '@/assets/images/doll-activity/prize/gnzw.png'
+
 const tabList = ref([
   {
     id: 1,
-    name: "Mi小橘",
+    name: 'Mi小橘',
     active: true,
-    color: "#FF6CB4",
+    color: '#FF6CB4',
     giftBg: prize2Bg,
     maxGift: {
-      rate: 0.88,
-      name: "月光女孩",
-      value: 18801,
-      pic: null,
+      rate: '0.800',
+      name: '3D法拉利',
+      value: 18800,
+      pic: fll,
     },
     gifts: [
       {
         id: 1,
-        rate: 0.88,
-        name: "礼物2",
-        value: 600,
-        pic: null,
+        rate: '0.400',
+        name: '天马行空',
+        value: 9900,
+        pic: tmxq,
       },
       {
         id: 2,
-        rate: 0.88,
-        name: "礼物2",
-        value: 602,
-        pic: null,
+        rate: '1.000',
+        name: '星星屋',
+        value: 5200,
+        pic: xxw,
       },
       {
         id: 3,
-        rate: 0.88,
-        name: "礼物3",
-        value: 603,
-        pic: null,
+        rate: '1.500',
+        name: '音乐吉他',
+        value: 2100,
+        pic: yyjt,
       },
       {
         id: 4,
-        rate: 0.88,
-        name: "礼物4",
-        value: 604,
-        pic: null,
-      }
-    ]
+        rate: '7.450',
+        name: '星光小马',
+        value: 1000,
+        pic: xgxm,
+      },
+      {
+        id: 5,
+        rate: '24.350',
+        name: '魔法棒',
+        value: 600,
+        pic: mfb,
+      },
+      {
+        id: 6,
+        rate: '11.500',
+        name: '学生雪糕',
+        value: 300,
+        pic: xsxg,
+      },
+      {
+        id: 7,
+        rate: '38.000',
+        name: '小小风铃',
+        value: 100,
+        pic: xxfl,
+      },
+      {
+        id: 8,
+        rate: '1.000',
+        name: '10个碎片',
+        value: null,
+        pic: sp,
+      },
+      {
+        id: 9,
+        rate: '14.000',
+        name: '1个碎片',
+        value: null,
+        pic: sp,
+      },
+    ],
   },
   {
     id: 2,
-    name: "Mi小美",
+    name: 'Mi小美',
     active: false,
-    color: "#B366FF",
+    color: '#B366FF',
     giftBg: prize4Bg,
     maxGift: {
-      rate: 0.88,
-      name: "月光女孩",
-      value: 18803,
-      pic: null,
+      rate: '0.400',
+      name: '嘉年华',
+      value: 52000,
+      pic: jnh,
     },
     gifts: [
       {
         id: 1,
-        rate: 0.88,
-        name: "礼物1",
-        value: 600,
-        pic: null,
+        rate: '0.300',
+        name: '天马行空',
+        value: 9900,
+        pic: tmxq,
       },
       {
         id: 2,
-        rate: 0.88,
-        name: "礼物2",
-        value: 602,
-        pic: null,
+        rate: '0.700',
+        name: '星星屋',
+        value: 5200,
+        pic: xxw,
       },
       {
         id: 3,
-        rate: 0.88,
-        name: "礼物3",
-        value: 603,
-        pic: null,
+        rate: '1.500',
+        name: '音乐吉他',
+        value: 2100,
+        pic: yyjt,
       },
       {
         id: 4,
-        rate: 0.88,
-        name: "礼物4",
-        value: 604,
-        pic: null,
-      }
-    ]
+        rate: '6.100',
+        name: '星光小马',
+        value: 1000,
+        pic: xgxm,
+      },
+      {
+        id: 5,
+        rate: '19.000',
+        name: '魔法棒',
+        value: 600,
+        pic: mfb,
+      },
+      {
+        id: 6,
+        rate: '7.000',
+        name: '学生雪糕',
+        value: 300,
+        pic: xsxg,
+      },
+      {
+        id: 7,
+        rate: '59.000',
+        name: '小小风铃',
+        value: 100,
+        pic: xxfl,
+      },
+      {
+        id: 8,
+        rate: '1.000',
+        name: '20个碎片',
+        value: null,
+        pic: sp,
+      },
+      {
+        id: 9,
+        rate: '5.000',
+        name: '1个碎片',
+        value: null,
+        pic: sp,
+      },
+    ],
   },
   {
     id: 3,
-    name: "Mi小白",
+    name: 'Mi小白',
     active: false,
-    color: "#6693FF",
+    color: '#6693FF',
     giftBg: prize3Bg,
     maxGift: {
-      rate: 0.88,
-      name: "月光女孩",
-      value: 18802,
-      pic: null,
+      rate: '0.150',
+      name: '光年之外',
+      value: 131400,
+      pic: gnzw,
     },
     gifts: [
       {
         id: 1,
-        rate: 0.88,
-        name: "礼物1",
-        value: 600,
-        pic: null,
+        rate: '0.500',
+        name: '天马行空',
+        value: 9900,
+        pic: tmxq,
       },
       {
         id: 2,
-        rate: 0.88,
-        name: "礼物2",
-        value: 602,
-        pic: null,
+        rate: '0.500',
+        name: '星星屋',
+        value: 5200,
+        pic: xxw,
       },
       {
         id: 3,
-        rate: 0.88,
-        name: "礼物3",
-        value: 603,
-        pic: null,
+        rate: '1.500',
+        name: '音乐吉他',
+        value: 2100,
+        pic: yyjt,
       },
       {
         id: 4,
-        rate: 0.88,
-        name: "礼物4",
-        value: 604,
-        pic: null,
-      }
-    ]
+        rate: '11.350',
+        name: '星光小马',
+        value: 1000,
+        pic: xgxm,
+      },
+      {
+        id: 5,
+        rate: '10.500',
+        name: '魔法棒',
+        value: 600,
+        pic: mfb,
+      },
+      {
+        id: 6,
+        rate: '5.000',
+        name: '学生雪糕',
+        value: 300,
+        pic: xsxg,
+      },
+      {
+        id: 7,
+        rate: '65.000',
+        name: '小小风铃',
+        value: 100,
+        pic: xxfl,
+      },
+      {
+        id: 8,
+        rate: '0.500',
+        name: '30个碎片',
+        value: null,
+        pic: sp,
+      },
+      {
+        id: 9,
+        rate: '5.00',
+        name: '1个碎片',
+        value: null,
+        pic: sp,
+      },
+    ],
   },
   {
     id: 4,
-    name: "Mi小咪",
+    name: 'Mi小咪',
     active: false,
     giftBg: prize1Bg,
-    color: "#FF6A68",
+    color: '#FF6A68',
     maxGift: {
-      rate: 0.88,
-      name: "月光女孩",
-      value: 18800,
-      pic: null,
+      rate: '0.050',
+      name: '航空母舰',
+      value: 334400,
+      pic: hkmj,
     },
     gifts: [
       {
         id: 1,
-        rate: 0.88,
-        name: "礼物1",
-        value: 600,
-        pic: null,
+        rate: '0.700',
+        name: '天马行空',
+        value: 9900,
+        pic: tmxq,
       },
       {
         id: 2,
-        rate: 0.88,
-        name: "礼物2",
-        value: 602,
-        pic: null,
+        rate: '1.000',
+        name: '星星屋',
+        value: 5200,
+        pic: xxw,
       },
       {
         id: 3,
-        rate: 0.88,
-        name: "礼物3",
-        value: 603,
-        pic: null,
+        rate: '1.000',
+        name: '音乐吉他',
+        value: 2100,
+        pic: yyjt,
       },
       {
         id: 4,
-        rate: 0.88,
-        name: "礼物4",
-        value: 604,
-        pic: null,
-      }
-    ]
-  }
+        rate: '6.950',
+        name: '星光小马',
+        value: 1000,
+        pic: xgxm,
+      },
+      {
+        id: 5,
+        rate: '12.400',
+        name: '魔法棒',
+        value: 600,
+        pic: mfb,
+      },
+      {
+        id: 6,
+        rate: '7.400',
+        name: '学生雪糕',
+        value: 300,
+        pic: xsxg,
+      },
+      {
+        id: 7,
+        rate: '65.000',
+        name: '小小风铃',
+        value: 100,
+        pic: xxfl,
+      },
+      {
+        id: 8,
+        rate: '0.500',
+        name: '50个碎片',
+        value: null,
+        pic: sp,
+      },
+      {
+        id: 9,
+        rate: '5.000',
+        name: '5个碎片',
+        value: null,
+        pic: sp,
+      },
+    ],
+  },
 ])
 
 const activeTab = computed(() => {
@@ -231,7 +407,7 @@ const openDialog = (tool) => {
 
 const changeTab = (idx) => {
   tabList.value.forEach((item, index) => {
-    item.active = idx === index + 1 ? true : false
+    item.active = idx === index + 1
   })
 }
 
@@ -275,7 +451,8 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       align-items: center;
       width: 678px;
       height: 1063px;
-      background: url('@/assets/images/doll-activity/prizeDialog.webp') center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/prizeDialog.webp') center
+        center / cover no-repeat transparent;
       font-size: 28px;
       padding-top: 135px;
       display: flex;
@@ -285,7 +462,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       .tabList {
         width: 564px;
         height: 80px;
-        background-color: #F7E3B6;
+        background-color: #f7e3b6;
         border-radius: 45px;
         display: flex;
         align-items: center;
@@ -295,14 +472,23 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           width: 122px;
           height: 64px;
           border-radius: 31px;
-          color: #B04F00;
+          color: #b04f00;
           text-align: center;
           line-height: 64px;
         }
 
         .active {
-          background: #FFD399;
+          background: #ffd399;
         }
+      }
+
+      .tabBottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        overflow-y: scroll;
+        height: 800px;
       }
 
       .max-value {
@@ -323,19 +509,28 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         margin-bottom: 33px;
         display: flex;
         justify-content: center;
-        align-items: flex-end;
-
+        align-items: center;
+        flex-direction: column;
         .rate {
           width: 93px;
           height: 36px;
           border-radius: 38px;
           background: #ffffff66;
           text-align: center;
-          color: #B04F00;
+          color: #b04f00;
           line-height: 36px;
           position: absolute;
           top: 55px;
           left: 11px;
+          font-size: 22px;
+        }
+
+        .gift-pic {
+          width: 107px;
+          height: 107px;
+          background-color: pink;
+          margin: 90px auto 10px;
+          border-radius: 24px;
         }
 
         .name-val {
@@ -344,12 +539,14 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
 
           .name {
             font-size: 26px;
-            font-weight: 500;
+            font-weight: 600;
+            color: #242424;
           }
 
           .val {
             font-size: 22px;
             font-weight: 500;
+            color: #242424;
           }
         }
       }
@@ -360,12 +557,14 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         display: flex;
         align-items: center;
         justify-content: space-between;
-
+        flex-wrap: wrap;
+        align-content: flex-start;
         .gift-item {
           display: flex;
           flex-direction: column;
           align-items: center;
-          color: #B04F00;
+          color: #b04f00;
+          margin-bottom: 20px;
           .rate {
             width: 93px;
             height: 36px;
@@ -374,15 +573,24 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
             font-size: 20px;
             text-align: center;
             line-height: 36px;
-            color: #B04F00;
+            color: #b04f00;
             margin-bottom: 7px;
           }
           .pic {
             width: 143px;
             height: 112px;
             border-radius: 24px;
-            background-color: #FFD399;
+            background-color: #ffd399;
             margin-bottom: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .prize-img {
+              width: 98px;
+              height: 88px;
+              border-radius: 20px;
+              background: #00000024;
+            }
           }
           .name {
             font-size: 22px;

@@ -23,7 +23,7 @@
                   {{ item.contentTxt }}
                 </span>
                 <span v-else>
-                  {{ item?.reward }}
+                  {{ item.id ? item?.reward : `碎片${item?.reward}` }}
                 </span>
               </div>
             </div>
@@ -92,7 +92,7 @@ const toUserCenter = (user_id) => {
 
 const changeTab = (id: number) => {
   if (activeTabIdx.value === id)
-  return
+    return
   tabList.value.forEach((i, idx) => {
     i.active = i.id === id
     if (i.active)

@@ -4,10 +4,19 @@
       <div class="body">
         <div class="close-btn" @click="close" />
         <div class="ret-box">
-          <div class="ret-item" :class="[retList.length === 1 ? 'one' : '']" v-for="(item,index) in retList" :key="index">
-            <div class="gift-pic" :style="`background:url(${prependHttpIfMissing(item?.icon)})  center center / cover no-repeat transparent`"></div>
-            <div class="gift-name">{{ item.title }}</div>
-            <div class="gift-price">价值{{item.gift_diamond}}钻</div>
+          <div v-for="(item, index) in retList" :key="index" class="ret-item" :class="[retList.length === 1 ? 'one' : '']">
+            <div class="gift-pic">
+              <div class="prize" :style="`background:url(${item.giftId ? prependHttpIfMissing(item?.icon) : debrisImg})  center center / cover no-repeat transparent`" />
+            </div>
+            <div v-if="item.giftId" class="gift-name">
+              {{ item.title }}
+            </div>
+            <div v-else class="gift-name">
+              碎片{{ item.title }}
+            </div>
+            <div v-if="item.gift_diamond" class="gift-price">
+              价值{{ item.gift_diamond }}钻
+            </div>
           </div>
         </div>
       </div>
@@ -17,6 +26,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import debrisImg from '@/assets/images/doll-activity/debris-icon.webp'
+
 const emits = defineEmits(['closeDialog'])
 const dialogVisible = ref(false)
 const retList = ref()
@@ -24,13 +35,13 @@ const setVisible = (bool) => {
   dialogVisible.value = bool
 }
 const openDialog = (list: any[]) => {
-  retList.value = list;
+  retList.value = list
   dialogVisible.value = true
 }
 
 const close = () => {
   setVisible(false)
-  console.log("close >");
+  console.log('close >')
   emits('closeDialog')
 }
 
@@ -71,8 +82,8 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       justify-content: center;
       width: 678px;
       height: 829px;
-      background: url('@/assets/images/doll-activity/result-dialog.webp') center center /
-        cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/result-dialog.webp') center
+        center / cover no-repeat transparent;
       font-size: 28px;
       padding-top: 120px;
       position: relative;
@@ -91,7 +102,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         display: flex;
         flex-wrap: wrap;
         .ret-item {
-          color: #B04F00;
+          color: #b04f00;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -101,9 +112,16 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           .gift-pic {
             width: 168px;
             height: 131px;
-            background-color: #FFD399;
+            background-color: #ffd399;
             border-radius: 24px;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .prize {
+              width: 108px;
+              height: 108px;
+            }
           }
           .gift-name {
             font-size: 22px;
@@ -113,11 +131,11 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
             font-size: 20px;
           }
         }
-        .ret-item:nth-child(3n+3) {
+        .ret-item:nth-child(3n + 3) {
           margin-right: 0;
         }
         .ret-item.one {
-          margin-right: 0!important;
+          margin-right: 0 !important;
         }
       }
     }
