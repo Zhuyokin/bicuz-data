@@ -59,7 +59,7 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
   ],
 
-  plugins: ['@/plugins/core-js-polyfill.ts'],
+  plugins: ['~/plugins/core-js-polyfill.ts'],
 
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
