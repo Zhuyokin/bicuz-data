@@ -15,8 +15,8 @@
     <div class="catch-box" :style="{ opacity: playCatch ? '1' : '0' }">
       <anim-player :conf="mConfig" @ready="onMReady" />
     </div>
-    <!-- 能量条 -->
-    <div v-motion-pop-visible-once class="energy-box" @click="openDialog(4)">
+    <!-- 能量条 v-motion-pop-visible-once -->
+    <div class="energy-box" @click="openDialog(4)">
       <div
         class="energy-icon"
         :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`"
@@ -310,7 +310,7 @@ const onReady = (player) => {
 const onMReady = (player) => {
   setTimeout(() => {
     player.player.play()
-  }, 500)
+  }, 100)
 }
 const setWidth = () => {
   let width = 0
@@ -419,10 +419,9 @@ const catchDoll = async () => {
 
   if (!skipActive.value) { // 跳过
     mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
-    playCatch.value = true
-    // setTimeout(() => {
-    //   playCatch.value = true
-    // }, 1000)
+    setTimeout(() => {
+      playCatch.value = true
+    }, 500)
   }
   else {
     openResult()
@@ -433,7 +432,7 @@ const catchDoll = async () => {
 const confirmCatch = throttle(() => {
   if (!playCatch.value)
     catchDoll()
-}, 1000)
+}, 500)
 
 const openResult = () => {
   resultDialogRef?.value?.openDialog(itemsRet.value)
