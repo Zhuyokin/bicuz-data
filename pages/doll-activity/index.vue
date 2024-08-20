@@ -26,14 +26,16 @@
       </div>
     </div>
     <!-- 右侧按钮组 -->
-    <div v-motion-pop-visible-once class="btn-group">
+    <!-- v-motion-pop-visible-once -->
+    <div class="btn-group">
       <div
         v-for="(item, index) in rightBtns" :key="index" class="rule-btn item-btn scale-btn"
         :style="`background:url(${item.pic})  center center / cover no-repeat transparent`"
         @click="openDialog(index)"
       />
     </div>
-    <div v-motion-pop-visible-once class="confirm-container">
+    <!-- v-motion-pop-visible-once  -->
+    <div class="confirm-container">
       <!-- 上一个按钮 -->
       <div class="pre-btn" @click="changeBtn(1)" />
       <!-- 确认按钮 -->
@@ -56,7 +58,8 @@
       </div>
     </div>
     <!-- 选择抓取次数 -->
-    <div v-motion-pop-visible-once class="times-box">
+    <!-- v-motion-pop-visible-once -->
+    <div class="times-box">
       <div
         v-for="(item, index) in getTimesTab" :key="index" class="times-item"
         :style="`background:url(${item.active ? TimeBtnActive : TimeBtnInActive})  center center / cover no-repeat transparent`"
@@ -71,7 +74,8 @@
       </div>
     </div>
     <!-- 我的账号 -->
-    <div v-motion-pop-visible-once class="my-account">
+    <!-- v-motion-pop-visible-once -->
+    <div class="my-account">
       <div>我的钻石：</div>
       <div class="diamond-num">
         {{ diamond }}
@@ -79,7 +83,8 @@
       <div class="recharge" @click="handleRecharge" />
     </div>
     <!-- 每日任务 -->
-    <div v-motion-pop-visible-once class="task-box">
+    <!-- v-motion-pop-visible-once -->
+    <div class="task-box">
       <div class="task-sub-title">
         每抓取1次娃娃增加1点进度值，当进度值达标即可领取相应奖励
       </div>
@@ -118,7 +123,8 @@
         </div>
       </div>
     </div>
-    <div v-motion-pop-visible-once class="act-rule-box" />
+    <!-- v-motion-pop-visible-once -->
+    <div class="act-rule-box" />
     <!-- 福馈弹窗 -->
     <ResultDialog ref="resultDialogRef" @close-dialog="openDollDialog" />
     <!-- 惊喜娃娃 -->
