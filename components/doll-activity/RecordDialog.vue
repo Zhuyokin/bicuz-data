@@ -8,10 +8,10 @@
           </div>
         </div>
         <!-- 空白页 -->
-        <div v-if="recordList.length" class="list-box">
+        <div v-if="recordList.length && !isLoading" class="list-box">
           <div v-for="(item, index) in recordList" :key="index" class="record-item">
             <div class="avatar" :style="`background:url(${prependHttpIfMissing(item?.face)})  center center / cover no-repeat transparent`" @click="toUserCenter(item.user_id)" />
-            <div v-if="item?.contentTxt || item?.reward" class="name-info">
+            <div class="name-info">
               <div class="name">
                 {{ item.nickname }}
               </div>
@@ -47,6 +47,7 @@ import { dollActApi } from '~/api'
 import { prependHttpIfMissing, timeFormat } from '@/utils/index'
 
 const dialogVisible = ref(false)
+const isLoading = ref(false)
 const recordList = ref([])
 const activeTabIdx = ref(1)
 const tabList = ref([{
@@ -77,14 +78,20 @@ const getMyRecord = async () => {
   res.list.forEach((i) => {
     i.contentTxt = i.content.map(i => i.title).join(',')
   })
-  recordList.value = res.list
+  if (activeTabIdx.value === 1) {
+    recordList.value = res.list
+    isLoading.value = false
+  }
 }
 
 const getExchangeRecord = async () => {
   const res = await dollActApi.myExchangeLog({ page: 1, pagesize: 999 }).catch(err => console.log(err))
   if (!res)
     return
-  recordList.value = res.list
+  if (activeTabIdx.value === 2) {
+    recordList.value = res.list
+    isLoading.value = false
+  }
   console.log('getExchangeRecord >', res)
 }
 
@@ -99,6 +106,7 @@ const toUserCenter = (user_id) => {
 const changeTab = (id: number) => {
   if (activeTabIdx.value === id)
     return
+  isLoading.value = true
   recordList.value = []
   tabList.value.forEach((i, idx) => {
     i.active = i.id === id

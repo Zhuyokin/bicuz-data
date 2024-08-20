@@ -47,7 +47,7 @@
               <div class="name">
                 {{ item.name }}
               </div>
-              <div class="value">
+              <div class="value" :style="`opacity: ${item.value ? '1' : '0'}`">
                 价值{{ item.value }}钻石
               </div>
             </div>
