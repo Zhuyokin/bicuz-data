@@ -99,6 +99,7 @@ const toUserCenter = (user_id) => {
 const changeTab = (id: number) => {
   if (activeTabIdx.value === id)
     return
+  recordList.value = []
   tabList.value.forEach((i, idx) => {
     i.active = i.id === id
     if (i.active)

@@ -38,9 +38,8 @@
       <div class="pre-btn" @click="changeBtn(1)" />
       <!-- 确认按钮  -->
       <div
-        v-motion-pop-visible-once
         :style="`background:url(${activeBtn.btnImage})  center center / cover no-repeat transparent`"
-        class="confirm-btn" @click="confirmCatch"
+        class="confirm-btn scale-btn" @click="confirmCatch"
       />
       <!-- 下一个按钮 -->
       <div class="next-btn" @click="changeBtn(2)" />
