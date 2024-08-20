@@ -492,7 +492,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       }
 
       .max-value {
-        width: 304px;
+        min-width: 304px;
         height: 36px;
         border-radius: 38px;
         color: #fff;
@@ -500,6 +500,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         line-height: 36px;
         text-align: center;
         margin: 19px auto 22px;
+        padding: 0 15px;
       }
 
       .max-gift {

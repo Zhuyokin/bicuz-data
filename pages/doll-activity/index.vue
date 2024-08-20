@@ -16,7 +16,7 @@
       <anim-player :conf="mConfig" @ready="onMReady" />
     </div>
     <!-- 能量条 v-motion-slide-bottom -->
-    <div v-motion-slide-bottom class="energy-box" @click="openDialog(4)">
+    <div class="energy-box" @click="openDialog(4)">
       <div
         class="energy-icon"
         :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`"
