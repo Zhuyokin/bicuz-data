@@ -431,7 +431,8 @@ const catchDoll = async () => {
 }
 
 const confirmCatch = throttle(() => {
-  catchDoll()
+  if (!playCatch.value)
+    catchDoll()
 }, 1000)
 
 const openResult = () => {
