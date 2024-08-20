@@ -710,6 +710,7 @@ onMounted(() => {
     align-items: center;
     gap: 24px;
     margin-bottom: 40px;
+    z-index: 9999;
 
     .times-item {
       width: 210px;
