@@ -26,7 +26,7 @@
                   :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
                 />
                 <div class="gift-name">
-                  {{ item?.name }}x{{ item?.day }}
+                  {{ item?.name }}x1
                 </div>
                 <div class="gift-price">
                   价值{{ item?.zs }}钻
@@ -57,7 +57,7 @@
                   :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
                 />
                 <div class="gift-name">
-                  {{ item?.name }}x{{ item?.day }}
+                  {{ item?.name }}x{{ item?.day }}天
                 </div>
                 <div class="gift-price">
                   价值{{ item?.zs }}钻
@@ -119,6 +119,8 @@ const getMall = async (type: number) => {
             url: prependHttpIfMissing(i.image),
             loop: true,
             useType: 2,
+            width: 108,
+            height: 108,
           },
         }
       }
@@ -258,6 +260,10 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
           flex-direction: column;
           align-items: center;
           margin: 0 25px 25px 0;
+          :deep(canvas) {
+            width: 108px !important;
+            height: 108px !important;
+          }
 
           .parts-item {
             display: flex;
