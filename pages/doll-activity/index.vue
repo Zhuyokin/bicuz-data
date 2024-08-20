@@ -373,7 +373,7 @@ const getUserAccount = async () => {
 }
 
 const handleRecharge = () => {
-  js_sync_app('js_sync_pay', user_id.value)
+  js_sync_app('js_sync_pay', { user_id: user_id.value }, 'user_id')
 }
 
 const getSurpriseVal = async () => {
@@ -627,7 +627,7 @@ onMounted(() => {
     right: 0;
     top: 50px;
     position: absolute;
-    z-index: 999;
+    z-index: 99;
     overflow: hidden;
     height: auto;
 
@@ -671,7 +671,7 @@ onMounted(() => {
       width: 265px;
       height: 256px;
       border-radius: 50%;
-      z-index: 999;
+      z-index: 99;
     }
 
     .skip-btn {
@@ -710,7 +710,7 @@ onMounted(() => {
     align-items: center;
     gap: 24px;
     margin-bottom: 40px;
-    z-index: 999;
+    z-index: 99;
 
     .times-item {
       width: 210px;
