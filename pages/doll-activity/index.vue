@@ -39,7 +39,7 @@
       <!-- 确认按钮  -->
       <div
         :style="`background:url(${activeBtn.btnImage})  center center / cover no-repeat transparent`"
-        class="confirm-btn scale-btn" @click="confirmCatch"
+        class="confirm-btn" :class="[!playCatch.value ? 'scale-btn' : '']" @click="confirmCatch"
       />
       <!-- 下一个按钮 -->
       <div class="next-btn" @click="changeBtn(2)" />
@@ -229,6 +229,7 @@ const diamond = ref(0)
 const dollValObj = ref({})
 const taskWidth = ref(0)
 const playCatch = ref(false)
+const playCatchTimer = ref(null)
 const itemsRet = ref({})
 const luckyRet = ref({})
 const surpriseRet = ref<any>({})
@@ -250,6 +251,7 @@ const mConfig = ref({
   loop: false,
   useType: 2,
   accurate: false,
+  beginPoint: 0.6,
   onEnded: () => {
     if (playCatch.value) {
       openResult()
@@ -393,6 +395,11 @@ const initPage = () => {
   getSurpriseVal()
 }
 
+const clearPlayCatchTimer = () => {
+  clearTimeout(playCatchTimer.value)
+  playCatchTimer.value = null
+}
+
 const catchDoll = async () => {
   // if (!skipActive.value) { // 跳过
   //   mConfig.value = Object.assign(mConfig.value, {any: Math.random()})
@@ -424,10 +431,11 @@ const catchDoll = async () => {
     luckyRet.value = {}
 
   if (!skipActive.value) { // 跳过
-    mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
-    setTimeout(() => {
+    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.6 })
+    playCatchTimer.value = setTimeout(() => {
       playCatch.value = true
-    }, 400)
+      clearPlayCatchTimer()
+    }, 350)
   }
   else {
     openResult()
@@ -438,7 +446,7 @@ const catchDoll = async () => {
 const confirmCatch = throttle(() => {
   if (!playCatch.value)
     catchDoll()
-}, 500)
+}, 1000)
 
 const openResult = () => {
   resultDialogRef?.value?.openDialog(itemsRet.value)
@@ -520,7 +528,12 @@ const getTaskReward = async (id: number) => {
 // })
 
 onMounted(() => {
+  clearPlayCatchTimer()
   initPage()
+})
+
+onUnmounted(() => {
+  clearPlayCatchTimer()
 })
 </script>
 
@@ -585,17 +598,15 @@ onMounted(() => {
   .energy-box {
     width: 73px;
     height: 382px;
-    top: 175px;
+    top: 245px;
     left: -5px;
     position: absolute;
-    background: url('@/assets/images/doll-activity/left-energy-bg.webp') center
+    background: url('@/assets/images/doll-activity/left-energy-bg.png') center
       center / cover no-repeat transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 4px solid rgba(255, 255, 255, 0.8);
-    border-radius: 0 20px 20px 0;
 
     .energy-icon {
       width: 76px;
@@ -627,7 +638,7 @@ onMounted(() => {
   .btn-group {
     width: 140px;
     right: 0;
-    top: 50px;
+    top: 220px;
     position: absolute;
     z-index: 99;
     overflow: hidden;
@@ -638,7 +649,7 @@ onMounted(() => {
       height: 140px;
       border-radius: 14px 0 0 14px;
       background-color: #ffe1ad;
-      margin-bottom: 25px;
+      margin-bottom: 4px;
     }
   }
 
@@ -863,12 +874,15 @@ onMounted(() => {
         }
       }
       .progress-item {
-        transform: translate(-6px, 23px);
+        transform: translate(0px, 23px);
       }
 
       .progress-item.first {
         align-items: flex-start;
         transform: translate(0px, 23px);
+      }
+      .progress-item:nth-child(5) {
+        transform: translate(6px, 23px);
       }
 
       .progress-item:last-child {
@@ -933,7 +947,7 @@ onMounted(() => {
 
   .act-rule-box {
     width: 676px;
-    height: 883px;
+    height: 966px;
     border-radius: 20px;
     background: url('@/assets/images/doll-activity/act-rule-bg.webp') center
       center / cover no-repeat transparent;

@@ -2,6 +2,7 @@
   <div id="record-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
+        <div class="close-btn" @click="close" />
         <div class="tabBox">
           <div v-for="(item, index) in tabList" :key="index" class="tab1 tabItem" :class="[item.id === activeTabIdx ? 'active' : '']" @click="changeTab(item.id)">
             {{ item.tabName }}
@@ -16,7 +17,7 @@
                 {{ item.nickname }}
               </div>
               <div class="info">
-                <span v-if="activeTabIdx === 1" class="title">在娃娃机里获得了</span>
+                <span v-if="activeTabIdx === 1" class="title">在幸运娃娃机里获得了</span>
                 <span v-else class="title">在兑换商城里兑换了</span>
                 <span v-if="activeTabIdx === 1">
                   {{ item?.contentTxt }}
@@ -72,7 +73,7 @@ const getMyRecord = async () => {
   res.list.forEach((item, index) => {
     item.content.forEach((i) => {
       if (!i.giftId)
-        i.title = `碎片${i.title}`
+        i.title = `${i.title}`
     })
   })
   res.list.forEach((i) => {
@@ -170,6 +171,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         center center / cover no-repeat transparent;
       font-size: 28px;
       padding-top: 135px;
+      .close-btn {
+        width: 68px;
+        height: 63px;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center
+          center / cover no-repeat transparent;
+        position: absolute;
+        right: 0;
+        top: 20px;
+      }
 
       .tabBox {
         width: 288px;
@@ -199,12 +209,12 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
 
       .list-box {
         width: 598px;
-        height: 705px;
+        height: 765px;
         overflow: hidden;
         overflow-y: scroll;
         .record-item {
           width: 598px;
-          height: 120px;
+          min-height: 240px;
           border-radius: 26px;
           background: #f7e3b7;
           margin-bottom: 20px;
@@ -216,6 +226,9 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
             color: #b04f00;
             font-size: 30px;
             font-weight: 600;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
           }
           .avatar {
             width: 104px;
@@ -225,15 +238,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           }
           .info {
             width: 395px;
-            max-height: 64px;
+            min-height: 30px;
             font-size: 24px;
             font-weight: 500;
             color: #b04f00;
-            display: -webkit-box; /* 使用弹性盒子布局模型 */
-            -webkit-box-orient: vertical; /* 垂直排列子元素 */
-            -webkit-line-clamp: 2; /* 限制在3行 */
-            overflow: hidden; /* 隐藏溢出的内容 */
-            text-overflow: ellipsis; /* 多行时显示省略符号 */
+            // display: -webkit-box; /* 使用弹性盒子布局模型 */
+            // -webkit-box-orient: vertical; /* 垂直排列子元素 */
+            // -webkit-line-clamp: 2; /* 限制在3行 */
+            // overflow: hidden; /* 隐藏溢出的内容 */
+            // text-overflow: ellipsis; /* 多行时显示省略符号 */
             white-space: normal; /* 使用正常的白空格处理方式，允许换行 */
           }
           .info {

@@ -2,6 +2,7 @@
   <div id="fukui-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
+        <div class="close-btn" @click="close" />
         <div class="tabList">
           <div
             v-for="(item, index) in tabList" class="tabName" :class="[item.active ? 'active' : '']"
@@ -228,7 +229,7 @@ const tabList = ref([
       {
         id: 9,
         rate: '5.000',
-        name: '1个碎片',
+        name: '2个碎片',
         value: null,
         pic: sp,
       },
@@ -306,7 +307,7 @@ const tabList = ref([
       {
         id: 9,
         rate: '5.00',
-        name: '1个碎片',
+        name: '3个碎片',
         value: null,
         pic: sp,
       },
@@ -458,6 +459,16 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      .close-btn {
+        width: 68px;
+        height: 63px;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center
+          center / cover no-repeat transparent;
+        position: absolute;
+        right: 0;
+        top: 20px;
+      }
 
       .tabList {
         width: 564px;

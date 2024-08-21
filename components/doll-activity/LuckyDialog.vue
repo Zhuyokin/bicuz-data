@@ -2,7 +2,8 @@
   <div id="fukui-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
-        <div class="luck-list">
+        <div class="close-btn" @click="close" />
+        <div v-if="luckList.length" class="luck-list">
           <div v-for="(item, index) in luckList" :key="index" class="lucy-user-item">
             <div class="user-info">
               <div class="rank">
@@ -35,8 +36,12 @@
               <div v-for="(iItem, iIdx) in item?.image" :key="iIdx" class="gift-item">
                 <div
                   class="gift-pic"
-                  :style="`background:url(${prependHttpIfMissing(iItem.gift_photo)})  center center / cover no-repeat transparent`"
-                />
+                >
+                  <div
+                    class="gift-img"
+                    :style="`background:url(${prependHttpIfMissing(iItem.gift_photo)})  center center / cover no-repeat transparent`"
+                  />
+                </div>
                 <div class="gift-name">
                   {{ iItem.gift_name }} ×  {{ iItem.number }}
                 </div>
@@ -45,6 +50,12 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div v-else class="blank">
+          <div class="blank-box">
+            暂时没有人上榜<br>
+            快去抓娃娃吧～
           </div>
         </div>
       </div>
@@ -137,6 +148,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         center center / cover no-repeat transparent;
       font-size: 28px;
       padding-top: 120px;
+      .close-btn {
+        width: 68px;
+        height: 63px;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center
+          center / cover no-repeat transparent;
+        position: absolute;
+        right: 0;
+        top: 20px;
+      }
 
       .luck-list {
         height: 870px;
@@ -256,6 +276,14 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
                 border-radius: 24px;
                 background: #ffd399;
                 margin-bottom: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .gift-img {
+                  width: 108px;
+                  height: 107px;
+                  border-radius: 24px;
+                }
               }
 
               .gift-name {
@@ -274,6 +302,25 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
               margin-right: 0;
             }
           }
+        }
+      }
+      .blank {
+        height: 870px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .blank-box {
+          width: 340px;
+          height: 144px;
+          border-radius: 38px;
+          background: #ffdc9f;
+          color: #b43a04;
+          font-size: 32px;
+          font-weight: 500;
+          line-height: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }

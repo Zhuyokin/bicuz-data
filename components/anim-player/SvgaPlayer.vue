@@ -31,7 +31,7 @@ const lifeCycleEvent = (player: Player, config: SvgaPlayerPropsType) => {
   }
   player.onProcess = () => {
     config.onPlaying && config.onPlaying(player)
-    console.log('onProcess', player)
+    // console.log('onProcess', player)
   }
   player.onEnd = () => {
     console.log('onEnd')

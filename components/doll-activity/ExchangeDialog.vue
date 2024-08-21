@@ -3,7 +3,7 @@
     <div class="fullPageDialog">
       <van-dialog v-model:show="show" class="fullPagePop" :show-confirm-button="false" :show-cancel-button="false">
         <div class="content">
-          <div class="title-txt">
+          <div class="title-txt" :class="[isIosFun() ? '' : '']">
             兑换商城
           </div>
           <div class="debris-box">
@@ -23,8 +23,13 @@
                 <!-- 图片 -->
                 <div
                   class="prize-pic"
-                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
-                />
+                >
+                  <div
+                    class="prize-img"
+                    :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
+                  />
+                </div>
+
                 <div class="gift-name">
                   {{ item?.name }}x1
                 </div>
@@ -54,8 +59,12 @@
                 <div
                   v-else
                   class="prize-pic"
-                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
-                />
+                >
+                  <div
+                    class="prize-img"
+                    :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
+                  />
+                </div>
                 <div class="gift-name">
                   {{ item?.name }} <span v-if="item?.day">x{{ item?.day }}天</span>
                 </div>
@@ -168,13 +177,12 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
 
     .cancel {
       position: fixed;
-      width: 60px;
-      height: 60px;
-      top: 74px;
+      width: 50px;
+      height: 50px;
+      top: 120px;
       left: 28px;
       z-index: 6;
-      background: url('@/assets/images/common/full-page-dialog-back.png')
-        no-repeat center;
+      background: url('@/assets/images/common/back-icon.webp') no-repeat center;
       background-size: 100% 100%;
     }
 
@@ -192,23 +200,24 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         font-size: 32px;
         color: #fff;
         font-weight: bold;
-        margin-top: 50px;
+        margin-top: 100px;
       }
 
       .gift-prize-box,
       .dress-prize-box {
         width: 678px;
-        height: 1223px;
         margin: 0 auto 50px;
         padding: 136px 62px 94px;
       }
 
       .gift-prize-box {
+        height: 1223px;
         background: url('@/assets/images/doll-activity/gift-prize-bg.webp')
           center center / cover no-repeat transparent;
       }
 
       .dress-prize-box {
+        height: 866px;
         background: url('@/assets/images/doll-activity/dress-prize-bg.webp')
           center center / cover no-repeat transparent;
       }
@@ -285,17 +294,6 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
             border-radius: 24px;
           }
 
-          .prize-pic {
-            width: 168px;
-            height: 131px;
-            border-radius: 24px;
-            background: #ffd399;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
           .gift-name {
             font-size: 22px;
             margin-bottom: 3px;
@@ -311,6 +309,25 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
             height: 50px;
             background: url('@/assets/images/doll-activity/receive-btn.webp')
               center center / cover no-repeat transparent;
+          }
+        }
+
+        .prize-pic {
+          width: 168px;
+          height: 131px;
+          border-radius: 24px;
+          background: #ffd399;
+          margin-bottom: 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .prize-img {
+            width: 108px;
+            height: 107px;
+            border-radius: 24px;
           }
         }
 
@@ -331,7 +348,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
 }
 #exchange-dialog {
   :deep(canvas) {
-    width: 90% !important;
+    width: 70% !important;
     height: 90% !important;
   }
 }
