@@ -59,8 +59,12 @@
                 <div
                   v-else
                   class="prize-pic"
-                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
-                />
+                >
+                  <div
+                    class="prize-img"
+                    :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / contain no-repeat transparent`"
+                  />
+                </div>
                 <div class="gift-name">
                   {{ item?.name }} <span v-if="item?.day">x{{ item?.day }}天</span>
                 </div>
@@ -345,7 +349,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
 }
 #exchange-dialog {
   :deep(canvas) {
-    width: 90% !important;
+    width: 70% !important;
     height: 90% !important;
   }
 }
