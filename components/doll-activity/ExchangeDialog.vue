@@ -3,7 +3,7 @@
     <div class="fullPageDialog">
       <van-dialog v-model:show="show" class="fullPagePop" :show-confirm-button="false" :show-cancel-button="false">
         <div class="content">
-          <div class="title-txt">
+          <div class="title-txt" :class="[isIosFun() ? '' : '']">
             兑换商城
           </div>
           <div class="debris-box">
@@ -201,7 +201,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         font-size: 32px;
         color: #fff;
         font-weight: bold;
-        margin-top: 50px;
+        margin-top: 70px;
       }
 
       .gift-prize-box,
