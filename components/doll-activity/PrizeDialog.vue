@@ -228,7 +228,7 @@ const tabList = ref([
       {
         id: 9,
         rate: '5.000',
-        name: '1个碎片',
+        name: '2个碎片',
         value: null,
         pic: sp,
       },
@@ -306,7 +306,7 @@ const tabList = ref([
       {
         id: 9,
         rate: '5.00',
-        name: '1个碎片',
+        name: '3个碎片',
         value: null,
         pic: sp,
       },
