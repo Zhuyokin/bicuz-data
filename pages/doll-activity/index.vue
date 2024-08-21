@@ -10,38 +10,45 @@
       <anim-player :conf="config" @ready="onReady" />
     </div>
     <!-- v-if="!playCatch" -->
-    <div class="machine-box" v-if="!playCatch" :style="{ opacity: playCatch ? '0' : '1' }" />
+    <div class="machine-box" :style="{ opacity: playCatch ? '0' : '1' }" />
     <!-- v-else -->
     <div class="catch-box" :style="{ opacity: playCatch ? '1' : '0' }">
       <anim-player :conf="mConfig" @ready="onMReady" />
     </div>
-    <!-- 能量条 -->
+    <!-- 能量条  -->
     <div v-motion-pop-visible-once class="energy-box" @click="openDialog(4)">
-      <div class="energy-icon"
-        :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`" />
+      <div
+        class="energy-icon"
+        :style="`background:url(${activeBtn.dollImage})  center center / cover no-repeat transparent`"
+      />
       <div class="energy-bar-box">
         <div class="complete" :style="`height: ${dollValObj?.surprise_value}%`" />
       </div>
     </div>
     <!-- 右侧按钮组 -->
     <div v-motion-pop-visible-once class="btn-group">
-      <div v-for="(item, index) in rightBtns" :key="index" class="rule-btn item-btn scale-btn"
+      <div
+        v-for="(item, index) in rightBtns" :key="index" class="rule-btn item-btn scale-btn"
         :style="`background:url(${item.pic})  center center / cover no-repeat transparent`"
-        @click="openDialog(index)" />
+        @click="openDialog(index)"
+      />
     </div>
     <div v-motion-pop-visible-once class="confirm-container">
       <!-- 上一个按钮 -->
-      <div class="pre-btn" @click="changeBtn(1)"></div>
-      <!-- 确认按钮 -->
-      <div v-motion-pop-visible-once
+      <div class="pre-btn" @click="changeBtn(1)" />
+      <!-- 确认按钮  -->
+      <div
         :style="`background:url(${activeBtn.btnImage})  center center / cover no-repeat transparent`"
-        class="confirm-btn" @click="confirmCatch" />
+        class="confirm-btn scale-btn" @click="confirmCatch"
+      />
       <!-- 下一个按钮 -->
-      <div class="next-btn" @click="changeBtn(2)"></div>
+      <div class="next-btn" @click="changeBtn(2)" />
       <!-- 跳过动画 -->
       <div class="skip-btn" @click="skipActive = !skipActive">
-        <div class="skip-icon"
-          :style="`background:url(${skipActive ? skipConfirmBtn : skipCancelBtn})  center center / cover no-repeat transparent`" />
+        <div
+          class="skip-icon"
+          :style="`background:url(${skipActive ? skipConfirmBtn : skipCancelBtn})  center center / cover no-repeat transparent`"
+        />
         <div class="skip-txt">
           跳过动画
         </div>
@@ -49,9 +56,11 @@
     </div>
     <!-- 选择抓取次数 -->
     <div v-motion-pop-visible-once class="times-box">
-      <div v-for="(item, index) in getTimesTab" :key="index" class="times-item"
+      <div
+        v-for="(item, index) in getTimesTab" :key="index" class="times-item"
         :style="`background:url(${item.active ? TimeBtnActive : TimeBtnInActive})  center center / cover no-repeat transparent`"
-        @click="changeTab(index)">
+        @click="changeTab(index)"
+      >
         <div class="times">
           抓{{ item.time }}次
         </div>
@@ -93,20 +102,24 @@
       </div>
       <div class="task-container">
         <div v-for="(item, index) in taskList" :key="index" class="task-item">
-          <div class="task-img"
-            :style="`background:url(${prependHttpIfMissing(item.icon)})  center center / cover no-repeat transparent`" />
+          <div
+            class="task-img"
+            :style="`background:url(${prependHttpIfMissing(item.icon)})  center center / cover no-repeat transparent`"
+          />
           <div class="task-name">
             {{ item.remark }}
           </div>
-          <div class="task-status"
+          <div
+            class="task-status"
             :class="[item.status === 0 ? 'task-status0' : item.status === 1 ? 'task-status1' : 'task-status2']"
-            @click="getTaskReward(item.id)" />
+            @click="getTaskReward(item.id)"
+          />
         </div>
       </div>
     </div>
     <div v-motion-pop-visible-once class="act-rule-box" />
     <!-- 福馈弹窗 -->
-    <ResultDialog ref="resultDialogRef" @closeDialog="openDollDialog" />
+    <ResultDialog ref="resultDialogRef" @close-dialog="openDollDialog" />
     <!-- 惊喜娃娃 -->
     <DollRuleDialog ref="dollRuleDialogRef" @success="initPage" />
     <!-- 奖品 -->
@@ -114,7 +127,7 @@
     <!-- 欧皇 -->
     <LuckyDialog ref="luckyDialogRef" @success="initPage" />
     <!-- 兑换商城 -->
-    <ExchangeDialog ref="exchangeDialogRef" @success="getSurpriseVal" :debris="dollValObj?.debris_number" />
+    <ExchangeDialog ref="exchangeDialogRef" :debris="dollValObj?.debris_number" @success="getSurpriseVal" />
     <!-- 记录 -->
     <RecordDialog ref="recordDialogRef" @success="initPage" />
     <!-- 娃娃弹窗 -->
@@ -133,7 +146,7 @@ import TimeBtnActive from '@/assets/images/doll-activity/time-btn-active.webp'
 import TimeBtnInActive from '@/assets/images/doll-activity/time-btn-inactive.webp'
 import skipConfirmBtn from '@/assets/images/doll-activity/skip-confirm.webp'
 import skipCancelBtn from '@/assets/images/doll-activity/skip-cancel.webp'
-import { isIosFun, js_sync_app, prependHttpIfMissing } from '@/utils/index'
+import { isIosFun, js_sync_app, prependHttpIfMissing, throttle } from '@/utils/index'
 import DollRuleDialog from '~/components/doll-activity/DollRuleDialog.vue'
 import ExchangeDialog from '~/components/doll-activity/ExchangeDialog.vue'
 import PrizeDialog from '~/components/doll-activity/PrizeDialog.vue'
@@ -154,7 +167,6 @@ import Doll1Image from '@/assets/images/doll-activity/doll1.webp'
 import Doll2Image from '@/assets/images/doll-activity/doll2.webp'
 import Doll3Image from '@/assets/images/doll-activity/doll3.webp'
 import Doll4Image from '@/assets/images/doll-activity/doll4.webp'
-import { throttle } from '@/utils/index'
 import backIcon from '@/assets/images/common/back-icon.webp'
 
 const rightBtns = ref([
@@ -229,6 +241,7 @@ const config = ref({
   useType: 2,
   accurate: false,
 })
+
 const mConfig = ref({
   width: 750,
   height: 1400,
@@ -239,11 +252,12 @@ const mConfig = ref({
   accurate: false,
   onEnded: () => {
     if (playCatch.value) {
-      openResult();
+      openResult()
       playCatch.value = false
     }
   },
 })
+
 const btnGroup = ref([
   {
     id: 1,
@@ -271,7 +285,6 @@ const btnGroup = ref([
   },
 ])
 
-
 const handleBack = () => {
   js_sync_back()
 }
@@ -282,34 +295,42 @@ const activeBtn = computed(() => {
 
 const leftTxt = computed(() => {
   if (taskNum.value <= taskList.value[0].number)
-    return (taskList.value[0].number - taskNum.value)
+    return (taskNum.value === taskList.value[0].number ? taskList.value[1].number - taskNum.value : taskList.value[0].number - taskNum.value)
   else if (taskNum.value <= taskList.value[1].number)
-    return (taskList.value[1].number - taskNum.value)
+    return (taskNum.value === taskList.value[1].number ? taskList.value[2].number - taskNum.value : taskList.value[1].number - taskNum.value)
   else if (taskNum.value <= taskList.value[2].number)
-    return (taskList.value[2].number - taskNum.value)
+    return (taskNum.value === taskList.value[2].number ? taskList.value[3].number - taskNum.value : taskList.value[2].number - taskNum.value)
   else if (taskNum.value <= taskList.value[3].number)
-    return (taskList.value[3].number - taskNum.value)
+    return (taskNum.value === taskList.value[3].number ? 100 : taskList.value[3].number - taskNum.value)
 })
 
 const onReady = (player) => {
   player.player.play()
 }
+
 const onMReady = (player) => {
-  player.player.play()
+  setTimeout(() => {
+    player.player.play()
+  }, 100)
 }
+
+const roundToOneDecimal = (number: number) => {
+  return Number(number.toFixed(1))
+}
+
 const setWidth = () => {
   let width = 0
   if (taskNum.value <= taskList.value[0].number)
-    width = (taskNum.value - 0) / (taskList.value[0].number - 0) * 100
+    width = taskNum.value === taskList.value[0].number ? 25 : roundToOneDecimal(taskNum.value / taskList.value[0].number * 25)
 
   else if (taskNum.value <= taskList.value[1].number)
-    width = (taskNum.value - taskList.value[0].number) / (taskList.value[1].number - taskList.value[0].number) * 25 + 25
+    width = taskNum.value === taskList.value[1].number ? 50 : roundToOneDecimal((taskNum.value - taskList.value[0].number) / (taskList.value[1].number - taskList.value[0].number) * 25) + 25
 
   else if (taskNum.value <= taskList.value[2].number)
-    width = (taskNum.value - taskList.value[1].number) / (taskList.value[2].number - taskList.value[1].number) * 25 + 25 * 2
+    width = taskNum.value === taskList.value[2].number ? 75 : roundToOneDecimal((taskNum.value - taskList.value[1].number) / (taskList.value[2].number - taskList.value[1].number) * 25) + 25 * 2
 
   else if (taskNum.value <= taskList.value[3].number)
-    width = (taskNum.value - taskList.value[2].number) / (taskList.value[3].number - taskList.value[2].number) * 25 + 25 * 3
+    width = taskNum.value === taskList.value[3].number ? 100 : roundToOneDecimal((taskNum.value - taskList.value[2].number) / (taskList.value[3].number - taskList.value[2].number) * 25) + 25 * 3
   else
     width = 100
   taskWidth.value = width
@@ -354,7 +375,7 @@ const getUserAccount = async () => {
 }
 
 const handleRecharge = () => {
-  js_sync_app('js_sync_pay', user_id.value)
+  js_sync_app('js_sync_pay', { user_id: user_id.value }, 'user_id')
 }
 
 const getSurpriseVal = async () => {
@@ -380,9 +401,9 @@ const catchDoll = async () => {
   //   },200)
   // }
   // return
-  const res = await dollActApi.getLotteryPrize({ type: activeBtn.value.id, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch(err => {
-    console.log("err >", JSON.parse(err));
-    if (JSON.parse(err)?.msg === "余额不足") {
+  const res = await dollActApi.getLotteryPrize({ type: activeBtn.value.id, number: getTimesTab.value[activeTabIdx.value - 1].time }).catch((err) => {
+    console.log('err >', JSON.parse(err))
+    if (JSON.parse(err)?.msg === '余额不足') {
       setTimeout(() => {
         handleRecharge()
       }, 500)
@@ -391,31 +412,33 @@ const catchDoll = async () => {
   if (!res)
     return
   initPage()
-  itemsRet.value = res.items;
-  if (!Array.isArray(res.surprise)) {
-    surpriseRet.value = res.surprise;
-  } else {
+  itemsRet.value = res.items
+  if (!Array.isArray(res.surprise))
+    surpriseRet.value = res.surprise
+  else
     surpriseRet.value = {}
-  }
-  if (res.luck) {
+
+  if (res.luck)
     luckyRet.value = res.luck
-  } else {
+  else
     luckyRet.value = {}
-  }
+
   if (!skipActive.value) { // 跳过
     mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
     setTimeout(() => {
       playCatch.value = true
-    }, 200)
-  } else {
+    }, 400)
+  }
+  else {
     openResult()
   }
   console.log('confirmCatch >', res)
 }
 
 const confirmCatch = throttle(() => {
-  catchDoll()
-}, 1000)
+  if (!playCatch.value)
+    catchDoll()
+}, 500)
 
 const openResult = () => {
   resultDialogRef?.value?.openDialog(itemsRet.value)
@@ -441,13 +464,12 @@ const openRecord = () => {
 }
 
 const openDollDialog = () => {
-  console.log("openDollDialog >============");
-  if (Object.keys(surpriseRet.value).length) {
+  console.log('openDollDialog >============')
+  if (Object.keys(surpriseRet.value).length)
     dollDialogRef?.value?.openDialog(surpriseRet.value)
-  }
-  if (Object.keys(luckyRet.value).length) {
+
+  if (Object.keys(luckyRet.value).length)
     dollDialogRef?.value?.openDialog(luckyRet.value)
-  }
 }
 
 const openDialog = (index: number) => {
@@ -465,25 +487,23 @@ const openDialog = (index: number) => {
 
 const changeBtn = (type: number) => {
   // 1 - 上一个  2 - 下一个
-  let idx = btnGroup.value.findIndex(i => i.active);
+  let idx = btnGroup.value.findIndex(i => i.active)
   if (type === 1) {
-    if (idx <= 0) {
+    if (idx <= 0)
       idx = 3
-    } else {
+    else
       idx -= 1
-    }
   }
   if (type === 2) {
-    if (idx >= 3) {
+    if (idx >= 3)
       idx = 0
-    } else {
+    else
       idx += 1
-    }
   }
   btnGroup.value.forEach((item, index) => {
-    item.active = index === idx ? true : false
+    item.active = index === idx
   })
-  getSurpriseVal();
+  getSurpriseVal()
 }
 
 const getTaskReward = async (id: number) => {
@@ -501,7 +521,6 @@ const getTaskReward = async (id: number) => {
 
 onMounted(() => {
   initPage()
-  // openDollDialog()
 })
 </script>
 
@@ -521,7 +540,6 @@ onMounted(() => {
 }
 
 @keyframes scale {
-
   0%,
   100% {
     transform: scale(1);
@@ -570,7 +588,8 @@ onMounted(() => {
     top: 175px;
     left: -5px;
     position: absolute;
-    background: url('@/assets/images/doll-activity/left-energy-bg.webp') center center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/left-energy-bg.webp') center
+      center / cover no-repeat transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -600,7 +619,7 @@ onMounted(() => {
         border-radius: 20px;
         background: linear-gradient(180deg, #ff3516 0%, #ff918b 100%),
           rgba(255, 255, 255, 0.8);
-        transform: translateX(-.5px);
+        transform: translateX(-0.5px);
       }
     }
   }
@@ -610,7 +629,7 @@ onMounted(() => {
     right: 0;
     top: 50px;
     position: absolute;
-    z-index: 999;
+    z-index: 99;
     overflow: hidden;
     height: auto;
 
@@ -634,13 +653,15 @@ onMounted(() => {
     .pre-btn {
       width: 65px;
       height: 73px;
-      background: url('@/assets/images/doll-activity/pre-btn.webp') center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/pre-btn.webp') center
+        center / cover no-repeat transparent;
     }
 
     .next-btn {
       width: 65px;
       height: 73px;
-      background: url('@/assets/images/doll-activity/next-btn.webp') center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/next-btn.webp') center
+        center / cover no-repeat transparent;
     }
 
     .pre-btn,
@@ -652,6 +673,7 @@ onMounted(() => {
       width: 265px;
       height: 256px;
       border-radius: 50%;
+      z-index: 99;
     }
 
     .skip-btn {
@@ -671,7 +693,8 @@ onMounted(() => {
         width: 28px;
         height: 28px;
         margin-right: 6px;
-        background: url('@/assets/images/doll-activity/skip-cancel.webp') center center / cover no-repeat transparent;
+        background: url('@/assets/images/doll-activity/skip-cancel.webp') center
+          center / cover no-repeat transparent;
       }
 
       .skip-txt {
@@ -689,6 +712,7 @@ onMounted(() => {
     align-items: center;
     gap: 24px;
     margin-bottom: 40px;
+    z-index: 99;
 
     .times-item {
       width: 210px;
@@ -728,14 +752,16 @@ onMounted(() => {
     .recharge {
       width: 169px;
       height: 61px;
-      background: url('@/assets/images/doll-activity/recharge-btn.webp') center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/recharge-btn.webp') center
+        center / cover no-repeat transparent;
     }
   }
 
   .task-box {
     width: 676px;
     height: 593px;
-    background: url('@/assets/images/doll-activity/daily-task-bg.webp') center center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/daily-task-bg.webp') center
+      center / cover no-repeat transparent;
     border-radius: 20px;
     margin-bottom: 27px;
     display: flex;
@@ -793,7 +819,8 @@ onMounted(() => {
           left: 50%;
           transform: translateX(-50%);
           bottom: -10px;
-          background: url('@/assets/images/doll-activity/arrow-down.webp') center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/arrow-down.webp')
+            center center / cover no-repeat transparent;
         }
       }
 
@@ -804,7 +831,7 @@ onMounted(() => {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        transform: translateY(20px);
+        transform: translateY(23px);
 
         .red-dot-box {
           width: 26px;
@@ -825,7 +852,8 @@ onMounted(() => {
           width: 26px;
           height: 26px;
           border-radius: 50%;
-          background: url('@/assets/images/doll-activity/star-icon.webp') center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/star-icon.webp') center
+            center / cover no-repeat transparent;
         }
 
         .progress-num {
@@ -834,13 +862,18 @@ onMounted(() => {
           font-size: 28px;
         }
       }
+      .progress-item {
+        transform: translate(-6px, 23px);
+      }
 
       .progress-item.first {
         align-items: flex-start;
+        transform: translate(0px, 23px);
       }
 
       .progress-item:last-child {
         align-items: flex-end;
+        transform: translate(0px, 23px);
       }
     }
 
@@ -881,15 +914,18 @@ onMounted(() => {
         }
 
         .task-status0 {
-          background: url('@/assets/images/doll-activity/notFinishBtn.webp') center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/notFinishBtn.webp')
+            center center / cover no-repeat transparent;
         }
 
         .task-status1 {
-          background: url('@/assets/images/doll-activity/getRewardBtn.webp') center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/getRewardBtn.webp')
+            center center / cover no-repeat transparent;
         }
 
         .task-status2 {
-          background: url('@/assets/images/doll-activity/hasFinishedBtn.webp') center center / cover no-repeat transparent;
+          background: url('@/assets/images/doll-activity/hasFinishedBtn.webp')
+            center center / cover no-repeat transparent;
         }
       }
     }
@@ -899,7 +935,8 @@ onMounted(() => {
     width: 676px;
     height: 883px;
     border-radius: 20px;
-    background: url('@/assets/images/doll-activity/act-rule-bg.webp') center center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/act-rule-bg.webp') center
+      center / cover no-repeat transparent;
   }
 
   .header-bg {
@@ -918,7 +955,8 @@ onMounted(() => {
   }
 
   .machine-box {
-    background: url('@/assets/images/doll-activity/machine.png') center center / cover no-repeat transparent;
+    background: url('@/assets/images/doll-activity/machine.png') center center /
+      cover no-repeat transparent;
   }
 
   :deep(canvas) {
