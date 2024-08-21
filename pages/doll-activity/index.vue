@@ -39,7 +39,7 @@
       <!-- 确认按钮  -->
       <div
         :style="`background:url(${activeBtn.btnImage})  center center / cover no-repeat transparent`"
-        class="confirm-btn scale-btn" @click="confirmCatch"
+        class="confirm-btn" :class="[!playCatch.value ? 'scale-btn' : '']" @click="confirmCatch"
       />
       <!-- 下一个按钮 -->
       <div class="next-btn" @click="changeBtn(2)" />
@@ -424,10 +424,11 @@ const catchDoll = async () => {
     luckyRet.value = {}
 
   if (!skipActive.value) { // 跳过
-    mConfig.value = Object.assign(mConfig.value, { any: Math.random() })
-    setTimeout(() => {
-      playCatch.value = true
-    }, 400)
+    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.95 })
+    playCatch.value = true
+    // setTimeout(() => {
+    //   playCatch.value = true
+    // }, 400)
   }
   else {
     openResult()
@@ -438,7 +439,7 @@ const catchDoll = async () => {
 const confirmCatch = throttle(() => {
   if (!playCatch.value)
     catchDoll()
-}, 500)
+}, 1000)
 
 const openResult = () => {
   resultDialogRef?.value?.openDialog(itemsRet.value)
