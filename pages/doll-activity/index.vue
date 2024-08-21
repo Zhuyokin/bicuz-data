@@ -78,7 +78,7 @@
       <div class="recharge" @click="handleRecharge" />
     </div>
     <!-- 每日任务 -->
-    <div v-motion-pop-visible-once class="task-box">
+    <div class="task-box">
       <div class="task-sub-title">
         每抓取1次娃娃增加1点进度值，当进度值达标即可领取相应奖励
       </div>
@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-    <div v-motion-pop-visible-once class="act-rule-box" />
+    <div class="act-rule-box" />
     <!-- 福馈弹窗 -->
     <ResultDialog ref="resultDialogRef" @close-dialog="openDollDialog" />
     <!-- 惊喜娃娃 -->
