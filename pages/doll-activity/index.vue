@@ -229,6 +229,7 @@ const diamond = ref(0)
 const dollValObj = ref({})
 const taskWidth = ref(0)
 const playCatch = ref(false)
+const playCatchTimer = ref(null)
 const itemsRet = ref({})
 const luckyRet = ref({})
 const surpriseRet = ref<any>({})
@@ -250,6 +251,7 @@ const mConfig = ref({
   loop: false,
   useType: 2,
   accurate: false,
+  beginPoint: 0.6,
   onEnded: () => {
     if (playCatch.value) {
       openResult()
@@ -393,6 +395,11 @@ const initPage = () => {
   getSurpriseVal()
 }
 
+const clearPlayCatchTimer = () => {
+  clearTimeout(playCatchTimer.value)
+  playCatchTimer.value = null
+}
+
 const catchDoll = async () => {
   // if (!skipActive.value) { // 跳过
   //   mConfig.value = Object.assign(mConfig.value, {any: Math.random()})
@@ -424,10 +431,11 @@ const catchDoll = async () => {
     luckyRet.value = {}
 
   if (!skipActive.value) { // 跳过
-    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.65 })
-    setTimeout(() => {
+    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.6 })
+    playCatchTimer.value = setTimeout(() => {
       playCatch.value = true
-    }, 200)
+      clearPlayCatchTimer()
+    }, 350)
   }
   else {
     openResult()
@@ -520,7 +528,12 @@ const getTaskReward = async (id: number) => {
 // })
 
 onMounted(() => {
+  clearPlayCatchTimer()
   initPage()
+})
+
+onUnmounted(() => {
+  clearPlayCatchTimer()
 })
 </script>
 
