@@ -424,7 +424,7 @@ const catchDoll = async () => {
     luckyRet.value = {}
 
   if (!skipActive.value) { // 跳过
-    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.95 })
+    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.35 })
     playCatch.value = true
     // setTimeout(() => {
     //   playCatch.value = true
@@ -864,12 +864,15 @@ onMounted(() => {
         }
       }
       .progress-item {
-        transform: translate(-6px, 23px);
+        transform: translate(0px, 23px);
       }
 
       .progress-item.first {
         align-items: flex-start;
         transform: translate(0px, 23px);
+      }
+      .progress-item:nth-child(5) {
+        transform: translate(6px, 23px);
       }
 
       .progress-item:last-child {
