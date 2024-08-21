@@ -99,8 +99,10 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       .ret-box {
         max-width: 560px;
         min-height: 207px;
+        max-height: 600px;
         display: flex;
         flex-wrap: wrap;
+        overflow-y: scroll;
         .ret-item {
           color: #b04f00;
           display: flex;
