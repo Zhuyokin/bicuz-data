@@ -72,7 +72,7 @@ const getMyRecord = async () => {
   res.list.forEach((item, index) => {
     item.content.forEach((i) => {
       if (!i.giftId)
-        i.title = `碎片${i.title}`
+        i.title = `${i.title}`
     })
   })
   res.list.forEach((i) => {

@@ -12,7 +12,7 @@
               {{ item.title }}
             </div>
             <div v-else class="gift-name">
-              碎片{{ item.title }}
+              {{ item.title }}
             </div>
             <div v-if="item.gift_diamond" class="gift-price">
               价值{{ item.gift_diamond }}钻
