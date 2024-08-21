@@ -177,9 +177,9 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
 
     .cancel {
       position: fixed;
-      width: 60px;
-      height: 60px;
-      top: 74px;
+      width: 50px;
+      height: 50px;
+      top: 120px;
       left: 28px;
       z-index: 6;
       background: url('@/assets/images/common/back-icon.webp') no-repeat center;
@@ -200,7 +200,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         font-size: 32px;
         color: #fff;
         font-weight: bold;
-        margin-top: 70px;
+        margin-top: 100px;
       }
 
       .gift-prize-box,

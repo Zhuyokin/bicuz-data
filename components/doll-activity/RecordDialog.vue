@@ -2,6 +2,7 @@
   <div id="record-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
+        <div class="close-btn" @click="close" />
         <div class="tabBox">
           <div v-for="(item, index) in tabList" :key="index" class="tab1 tabItem" :class="[item.id === activeTabIdx ? 'active' : '']" @click="changeTab(item.id)">
             {{ item.tabName }}
@@ -170,6 +171,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         center center / cover no-repeat transparent;
       font-size: 28px;
       padding-top: 135px;
+      .close-btn {
+        width: 68px;
+        height: 63px;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center
+          center / cover no-repeat transparent;
+        position: absolute;
+        right: 0;
+        top: 20px;
+      }
 
       .tabBox {
         width: 288px;
@@ -199,12 +209,12 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
 
       .list-box {
         width: 598px;
-        height: 705px;
+        height: 765px;
         overflow: hidden;
         overflow-y: scroll;
         .record-item {
           width: 598px;
-          min-height: 140px;
+          min-height: 240px;
           border-radius: 26px;
           background: #f7e3b7;
           margin-bottom: 20px;

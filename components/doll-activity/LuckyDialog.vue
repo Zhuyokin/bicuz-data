@@ -2,6 +2,7 @@
   <div id="fukui-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
+        <div class="close-btn" @click="close" />
         <div v-if="luckList.length" class="luck-list">
           <div v-for="(item, index) in luckList" :key="index" class="lucy-user-item">
             <div class="user-info">
@@ -147,6 +148,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         center center / cover no-repeat transparent;
       font-size: 28px;
       padding-top: 120px;
+      .close-btn {
+        width: 68px;
+        height: 63px;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center
+          center / cover no-repeat transparent;
+        position: absolute;
+        right: 0;
+        top: 20px;
+      }
 
       .luck-list {
         height: 870px;

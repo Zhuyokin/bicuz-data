@@ -598,7 +598,7 @@ onUnmounted(() => {
   .energy-box {
     width: 73px;
     height: 382px;
-    top: 215px;
+    top: 245px;
     left: -5px;
     position: absolute;
     background: url('@/assets/images/doll-activity/left-energy-bg.png') center
@@ -638,7 +638,7 @@ onUnmounted(() => {
   .btn-group {
     width: 140px;
     right: 0;
-    top: 90px;
+    top: 220px;
     position: absolute;
     z-index: 99;
     overflow: hidden;
@@ -649,7 +649,7 @@ onUnmounted(() => {
       height: 140px;
       border-radius: 14px 0 0 14px;
       background-color: #ffe1ad;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
   }
 
