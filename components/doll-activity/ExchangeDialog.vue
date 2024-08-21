@@ -198,17 +198,18 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
       .gift-prize-box,
       .dress-prize-box {
         width: 678px;
-        height: 1223px;
         margin: 0 auto 50px;
         padding: 136px 62px 94px;
       }
 
       .gift-prize-box {
+        height: 1223px;
         background: url('@/assets/images/doll-activity/gift-prize-bg.webp')
           center center / cover no-repeat transparent;
       }
 
       .dress-prize-box {
+        height: 866px;
         background: url('@/assets/images/doll-activity/dress-prize-bg.webp')
           center center / cover no-repeat transparent;
       }

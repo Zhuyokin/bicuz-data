@@ -933,7 +933,7 @@ onMounted(() => {
 
   .act-rule-box {
     width: 676px;
-    height: 883px;
+    height: 966px;
     border-radius: 20px;
     background: url('@/assets/images/doll-activity/act-rule-bg.webp') center
       center / cover no-repeat transparent;

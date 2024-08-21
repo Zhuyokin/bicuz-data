@@ -16,7 +16,7 @@
                 {{ item.nickname }}
               </div>
               <div class="info">
-                <span v-if="activeTabIdx === 1" class="title">在娃娃机里获得了</span>
+                <span v-if="activeTabIdx === 1" class="title">在幸运娃娃机里获得了</span>
                 <span v-else class="title">在兑换商城里兑换了</span>
                 <span v-if="activeTabIdx === 1">
                   {{ item?.contentTxt }}
@@ -204,7 +204,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         overflow-y: scroll;
         .record-item {
           width: 598px;
-          height: 120px;
+          min-height: 140px;
           border-radius: 26px;
           background: #f7e3b7;
           margin-bottom: 20px;
@@ -216,6 +216,9 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
             color: #b04f00;
             font-size: 30px;
             font-weight: 600;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
           }
           .avatar {
             width: 104px;
@@ -225,15 +228,15 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           }
           .info {
             width: 395px;
-            max-height: 64px;
+            min-height: 30px;
             font-size: 24px;
             font-weight: 500;
             color: #b04f00;
-            display: -webkit-box; /* 使用弹性盒子布局模型 */
-            -webkit-box-orient: vertical; /* 垂直排列子元素 */
-            -webkit-line-clamp: 2; /* 限制在3行 */
-            overflow: hidden; /* 隐藏溢出的内容 */
-            text-overflow: ellipsis; /* 多行时显示省略符号 */
+            // display: -webkit-box; /* 使用弹性盒子布局模型 */
+            // -webkit-box-orient: vertical; /* 垂直排列子元素 */
+            // -webkit-line-clamp: 2; /* 限制在3行 */
+            // overflow: hidden; /* 隐藏溢出的内容 */
+            // text-overflow: ellipsis; /* 多行时显示省略符号 */
             white-space: normal; /* 使用正常的白空格处理方式，允许换行 */
           }
           .info {
