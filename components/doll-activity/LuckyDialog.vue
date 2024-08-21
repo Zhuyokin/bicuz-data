@@ -35,8 +35,12 @@
               <div v-for="(iItem, iIdx) in item?.image" :key="iIdx" class="gift-item">
                 <div
                   class="gift-pic"
-                  :style="`background:url(${prependHttpIfMissing(iItem.gift_photo)})  center center / cover no-repeat transparent`"
-                />
+                >
+                  <div
+                    class="gift-img"
+                    :style="`background:url(${prependHttpIfMissing(iItem.gift_photo)})  center center / cover no-repeat transparent`"
+                  />
+                </div>
                 <div class="gift-name">
                   {{ iItem.gift_name }} ×  {{ iItem.number }}
                 </div>
@@ -256,6 +260,14 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
                 border-radius: 24px;
                 background: #ffd399;
                 margin-bottom: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .gift-img {
+                  width: 108px;
+                  height: 107px;
+                  border-radius: 24px;
+                }
               }
 
               .gift-name {

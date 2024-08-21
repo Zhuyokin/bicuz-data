@@ -23,8 +23,13 @@
                 <!-- 图片 -->
                 <div
                   class="prize-pic"
-                  :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
-                />
+                >
+                  <div
+                    class="prize-img"
+                    :style="`background:url(${prependHttpIfMissing(item?.image)})  center center / cover no-repeat transparent`"
+                  />
+                </div>
+
                 <div class="gift-name">
                   {{ item?.name }}x1
                 </div>
@@ -286,17 +291,6 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
             border-radius: 24px;
           }
 
-          .prize-pic {
-            width: 168px;
-            height: 131px;
-            border-radius: 24px;
-            background: #ffd399;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
           .gift-name {
             font-size: 22px;
             margin-bottom: 3px;
@@ -312,6 +306,25 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
             height: 50px;
             background: url('@/assets/images/doll-activity/receive-btn.webp')
               center center / cover no-repeat transparent;
+          }
+        }
+
+        .prize-pic {
+          width: 168px;
+          height: 131px;
+          border-radius: 24px;
+          background: #ffd399;
+          margin-bottom: 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .prize-img {
+            width: 108px;
+            height: 107px;
+            border-radius: 24px;
           }
         }
 
