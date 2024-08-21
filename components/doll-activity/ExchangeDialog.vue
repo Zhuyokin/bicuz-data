@@ -182,8 +182,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
       top: 74px;
       left: 28px;
       z-index: 6;
-      background: url('@/assets/images/common/full-page-dialog-back.png')
-        no-repeat center;
+      background: url('@/assets/images/common/back-icon.webp') no-repeat center;
       background-size: 100% 100%;
     }
 

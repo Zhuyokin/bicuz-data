@@ -1,7 +1,7 @@
 <template>
   <div id="fukui-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
-      <div class="body">
+      <div class="body" :class="[BgTypeNum === 1 ? 'one' : BgTypeNum === 2 ? 'two' : 'three']">
         <div class="close-btn" @click="close" />
         <div class="ret-box">
           <div v-for="(item, index) in retList" :key="index" class="ret-item" :class="[retList.length === 1 ? 'one' : '']">
@@ -38,6 +38,14 @@ const openDialog = (list: any[]) => {
   retList.value = list
   dialogVisible.value = true
 }
+
+const BgTypeNum = computed(() => {
+  if (retList.value.length <= 3)
+    return 1
+  else if (retList.value.length <= 6)
+    return 2
+  else return 3
+})
 
 const close = () => {
   setVisible(false)
@@ -81,9 +89,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       align-items: center;
       justify-content: center;
       width: 678px;
-      height: 829px;
-      background: url('@/assets/images/doll-activity/result-dialog.webp') center
-        center / cover no-repeat transparent;
+
       font-size: 28px;
       padding-top: 160px;
       position: relative;
@@ -139,6 +145,21 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           margin-right: 0 !important;
         }
       }
+    }
+    .body.one {
+      height: 466px;
+      background: url('@/assets/images/doll-activity/result-dialog1.webp')
+        center center / cover no-repeat transparent;
+    }
+    .body.two {
+      height: 696px;
+      background: url('@/assets/images/doll-activity/result-dialog2.webp')
+        center center / cover no-repeat transparent;
+    }
+    .body.three {
+      height: 829px;
+      background: url('@/assets/images/doll-activity/result-dialog3.webp')
+        center center / cover no-repeat transparent;
     }
   }
 }

@@ -601,14 +601,12 @@ onUnmounted(() => {
     top: 215px;
     left: -5px;
     position: absolute;
-    background: url('@/assets/images/doll-activity/left-energy-bg.webp') center
+    background: url('@/assets/images/doll-activity/left-energy-bg.png') center
       center / cover no-repeat transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 4px solid rgba(255, 255, 255, 0.8);
-    border-radius: 0 20px 20px 0;
 
     .energy-icon {
       width: 76px;

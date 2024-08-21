@@ -2,7 +2,7 @@
   <div id="fukui-dialog">
     <van-popup v-model:show="dialogVisible" @click-overlay="close">
       <div class="body">
-        <div class="luck-list">
+        <div v-if="luckList.length" class="luck-list">
           <div v-for="(item, index) in luckList" :key="index" class="lucy-user-item">
             <div class="user-info">
               <div class="rank">
@@ -49,6 +49,12 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div v-else class="blank">
+          <div class="blank-box">
+            暂时没有人上榜<br>
+            快去抓娃娃吧～
           </div>
         </div>
       </div>
@@ -286,6 +292,25 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
               margin-right: 0;
             }
           }
+        }
+      }
+      .blank {
+        height: 870px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .blank-box {
+          width: 340px;
+          height: 144px;
+          border-radius: 38px;
+          background: #ffdc9f;
+          color: #b43a04;
+          font-size: 32px;
+          font-weight: 500;
+          line-height: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }
