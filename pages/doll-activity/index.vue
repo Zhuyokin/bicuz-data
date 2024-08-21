@@ -424,11 +424,10 @@ const catchDoll = async () => {
     luckyRet.value = {}
 
   if (!skipActive.value) { // 跳过
-    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.55 })
-    playCatch.value = true
-    // setTimeout(() => {
-    //   playCatch.value = true
-    // }, 400)
+    mConfig.value = Object.assign(mConfig.value, { any: Math.random(), beginPoint: 0.15 })
+    setTimeout(() => {
+      playCatch.value = true
+    }, 200)
   }
   else {
     openResult()
