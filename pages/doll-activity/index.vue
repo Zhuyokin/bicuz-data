@@ -119,7 +119,7 @@
     </div>
     <div class="act-rule-box" />
     <!-- 福馈弹窗 -->
-    <ResultDialog ref="resultDialogRef" @close-dialog="openDollDialog" />
+    <ResultDialog ref="resultDialogRef" @close-dialog="openDollDialog" @confirm-catch="confirmCatch" />
     <!-- 惊喜娃娃 -->
     <DollRuleDialog ref="dollRuleDialogRef" @success="initPage" />
     <!-- 奖品 -->

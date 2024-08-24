@@ -19,6 +19,7 @@
             </div>
           </div>
         </div>
+        <div class="catch-again-btn" @click="catchAgain" />
       </div>
     </van-popup>
   </div>
@@ -28,7 +29,7 @@
 import { ref } from 'vue'
 import debrisImg from '@/assets/images/doll-activity/debris-icon.webp'
 
-const emits = defineEmits(['closeDialog'])
+const emits = defineEmits(['closeDialog', 'confirmCatch'])
 const dialogVisible = ref(false)
 const retList = ref()
 const setVisible = (bool) => {
@@ -37,6 +38,11 @@ const setVisible = (bool) => {
 const openDialog = (list: any[]) => {
   retList.value = list
   dialogVisible.value = true
+}
+
+const catchAgain = () => {
+  setVisible(false)
+  emits('confirmCatch')
 }
 
 const BgTypeNum = computed(() => {
@@ -77,7 +83,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
     justify-content: center;
     padding: 0 !important;
     width: 678px !important;
-    height: 829px !important;
+    // height: 829px !important;
     overflow: visible !important;
     height: auto;
     background: transparent;
@@ -89,6 +95,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       align-items: center;
       justify-content: center;
       width: 678px;
+      box-sizing: border-box;
 
       font-size: 28px;
       padding-top: 160px;
@@ -106,6 +113,7 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
         max-width: 560px;
         min-height: 207px;
         max-height: 600px;
+        margin-bottom: 20px;
         display: flex;
         flex-wrap: wrap;
         overflow-y: scroll;
@@ -145,19 +153,26 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
           margin-right: 0 !important;
         }
       }
+      .catch-again-btn {
+        width: 451px;
+        height: 111px;
+        margin: 0 auto;
+        background: url('@/assets/images/doll-activity/catch-again-btn.webp')
+          center center / cover no-repeat transparent;
+      }
     }
     .body.one {
-      height: 466px;
+      height: 567px;
       background: url('@/assets/images/doll-activity/result-dialog1.webp')
         center center / cover no-repeat transparent;
     }
     .body.two {
-      height: 696px;
+      height: 809px;
       background: url('@/assets/images/doll-activity/result-dialog2.webp')
         center center / cover no-repeat transparent;
     }
     .body.three {
-      height: 829px;
+      height: 1036px;
       background: url('@/assets/images/doll-activity/result-dialog3.webp')
         center center / cover no-repeat transparent;
     }
