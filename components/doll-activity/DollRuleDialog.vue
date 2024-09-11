@@ -13,7 +13,7 @@
             枫舞长安
           </div>
           <div class="gift-price">
-            1880钻石
+            9900钻石
           </div>
         </div>
         <div class="clown-l" />

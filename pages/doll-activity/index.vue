@@ -198,19 +198,19 @@ const getTimesTab = ref([
   {
     id: 1,
     time: 1,
-    cost: 60,
+    cost: 200,
     active: true,
   },
   {
     id: 2,
     time: 10,
-    cost: 600,
+    cost: 2000,
     active: false,
   },
   {
     id: 3,
     time: 50,
-    cost: 3000,
+    cost: 10000,
     active: false,
   },
 ])
