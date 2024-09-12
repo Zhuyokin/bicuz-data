@@ -450,6 +450,8 @@ const confirmCatch = throttle(() => {
 
 const openResult = () => {
   resultDialogRef?.value?.openDialog(itemsRet.value)
+  if (Object.keys(surpriseRet.value).length)
+    dollDialogRef?.value?.openDialog(surpriseRet.value)
 }
 
 const openSurprise = () => {
@@ -472,6 +474,7 @@ const openRecord = () => {
 }
 
 const openDollDialog = () => {
+  return
   console.log('openDollDialog >============')
   if (Object.keys(surpriseRet.value).length)
     dollDialogRef?.value?.openDialog(surpriseRet.value)

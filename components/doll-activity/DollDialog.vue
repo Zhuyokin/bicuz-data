@@ -8,7 +8,7 @@
           <div>你触发了{{ props.type === 1 ? '惊喜' : '幸运' }}娃娃事件，获得了奖励：</div>
         </div>
         <div class="gift-box">
-          <div class="gift-pic" :style="`background:url(${prependHttpIfMissing(gift?.gift_photo)})  center center / cover no-repeat transparent`"/>
+          <div class="gift-pic" :style="`background:url(${prependHttpIfMissing(gift?.gift_photo)})  center center / cover no-repeat transparent`" />
           <div class="gift-name">
             {{ gift?.gift_name }}
           </div>
@@ -86,7 +86,8 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
       .close-btn {
         width: 68px;
         height: 63px;
-        background: url('@/assets/images/doll-activity/close-icon.webp') center center / cover no-repeat transparent;
+        background: url('@/assets/images/doll-activity/close-icon.webp') center
+          center / cover no-repeat transparent;
         position: absolute;
         right: 0;
         top: 0;
@@ -132,11 +133,13 @@ defineExpose<{ openDialog: (boolean) => void }>({ openDialog })
     }
 
     .body.surprise {
-      background: url('@/assets/images/doll-activity/surprise-doll-dialog.webp') center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/surprise-doll-dialog.webp')
+        center center / cover no-repeat transparent;
     }
 
     .body.lucky {
-      background: url('@/assets/images/doll-activity/lucky-doll-dialog.webp') center center / cover no-repeat transparent;
+      background: url('@/assets/images/doll-activity/lucky-doll-dialog.webp')
+        center center / cover no-repeat transparent;
     }
   }
 }
