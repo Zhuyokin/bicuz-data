@@ -12,7 +12,7 @@
     "build.pre": "nuxi build --mode pre",
     "build.prod": "nuxi build --mode production",
     "generate": "nuxi generate",
-    "start": "PORT=3001 node .output/server/index.mjs",
+    "start": "node .output/server/index.mjs",
     "start:generate": "npx serve .output/public",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx,.md,.json --max-warnings 0 --cache",
     "lint:fix": "pnpm run lint --fix",
