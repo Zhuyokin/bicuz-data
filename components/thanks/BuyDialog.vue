@@ -15,7 +15,7 @@
           <div class="cancel btnClass scale-btn" @click="setVisible(false)">
             取消
           </div>
-          <div class="confirm btnClass scale-btn">
+          <div class="confirm btnClass scale-btn" @click="lottery">
             确认
           </div>
         </div>
@@ -32,7 +32,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { thanksApi } from '~/api'
 
+const emits = defineEmits(['initPage', 'openResult', 'handleLotteryAffirm', 'handleSvga'])
 const dialogVisible = ref(false)
 const check = ref(false)
 const timeNum = ref(0)
@@ -41,12 +43,30 @@ const setVisible = (bool: boolean, time?: number) => {
   if (time)
     timeNum.value = time
 }
-
+const startLottery = async (time?: number) => {
+  const res = await thanksApi.lottery({ number: time && time > 0 ? time : timeNum.value }).catch(err => console.log(err))
+  if (!res)
+    return
+  console.log('startLottery >', res)
+  setVisible(false)
+  emits('initPage')
+  emits('openResult', res.items, timeNum.value)
+}
 const toggleCheck = () => {
   check.value = !check.value
+  const params = {
+    type: 'isCheck',
+    isCheck: check.value,
+  }
+  emits('handleLotteryAffirm', params)
 }
 
-defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
+const lottery = () => {
+  setVisible(false)
+  emits('handleSvga', timeNum.value)
+}
+
+defineExpose<{ setVisible: (bool: boolean) => void, startLottery: (time?: number) => Promise<void> }>({ setVisible, startLottery })
 </script>
 
 <style lang="scss" scoped>

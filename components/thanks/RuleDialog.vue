@@ -2,7 +2,7 @@
   <div class="rule-dialog">
     <van-dialog v-model:show="show" class="rulePop" :show-confirm-button="false" :show-cancel-button="false">
       <div class="content">
-        <img src="@/assets/images/thanks/rule-bg.png">
+        <img src="@/assets/images/thanks/rule-bg.webp">
       </div>
       <div class="cancel cursor-pointer" @click="setVisible(false)" />
     </van-dialog>

@@ -6,10 +6,10 @@
           <div v-for="(item, index) in recordList" :key="index" class="dialog-item">
             <div class="left">
               <div class="date">
-                {{ item.time }}
+                {{ item?.create_time }}
               </div>
               <div class="gift">
-                获得礼物：{{ item.gift }}
+                获得礼物：{{ item?.contentTxt }}
               </div>
             </div>
             <div class="right">
@@ -27,62 +27,25 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { thanksApi } from '~/api'
 
 const dialogVisible = ref(false)
-const recordList = ref([
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-  {
-    id: 1,
-    time: '2024-10-29 16:34',
-    gift: '泡泡机X1',
-  },
-])
+const recordList = ref<any[]>([])
+
+const getRec = async () => {
+  const res = await thanksApi.getMyRecord({ page: 1, pagesize: 500 }).catch((err) => { console.log(err) })
+  if (!res)
+    return
+  console.log('getRec >', res)
+  recordList.value = res.list.map((item: any) => {
+    const txt = item.content.map((i: any) => `${i.title}* ${i.number}`).join(',')
+    return { ...item, contentTxt: txt }
+  })
+}
 const setVisible = (bool: boolean) => {
   dialogVisible.value = bool
+  if (bool)
+    getRec()
 }
 
 defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
@@ -114,13 +77,21 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
           color: #b58aa7;
           font-weight: 500;
           font-size: 24px;
+          margin-bottom: 33px;
+          position: relative;
           .left {
             .date {
               margin-bottom: 12.5px;
             }
             .gift {
+              width: 100%;
               color: #ff4bc6;
             }
+          }
+          .right {
+            position: absolute;
+            top: 0;
+            right: 0;
           }
         }
       }

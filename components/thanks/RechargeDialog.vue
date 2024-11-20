@@ -5,10 +5,10 @@
         <div class="diamond-left">
           <div>剩余钻石:</div>
           <div class="diamond" />
-          <div>0</div>
+          <div>{{ diamond }}</div>
         </div>
         <div class="price-list">
-          <div v-for="(item, index) in priceList" :key="index" class="price-item">
+          <div v-for="(item, index) in priceList" :key="index" class="price-item" :class="[item.active ? 'active' : '']" @click="selectPrice(index)">
             <div class="sugar-img" />
             <div class="sugar-num">
               ×{{ item.num }}
@@ -37,7 +37,7 @@
           <div class="cancel btnClass scale-btn" @click="setVisible(false)">
             取消
           </div>
-          <div class="confirm btnClass scale-btn">
+          <div class="confirm btnClass scale-btn" @click="confirmBuy">
             确认
           </div>
         </div>
@@ -48,29 +48,54 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { thanksApi } from '~/api'
+import { getUserWallet } from '@/api/modules/common'
+import { js_sync_app } from '@/utils/index'
 
 const props = defineProps<{ userId?: number, maxNum?: number }>()
+const emits = defineEmits(['initPage'])
 const dialogVisible = ref(false)
 const priceList = ref([
   {
     id: 1,
     num: 1,
     price: 200,
+    active: true,
   },
   {
     id: 2,
     num: 10,
     price: 2000,
+    active: false,
   },
   {
     id: 3,
     num: 100,
     price: 20000,
+    active: false,
   },
 ])
-const num = ref(0)
+const num = ref(1)
+const diamond = ref(0)
+const selectedPrice = ref({
+  id: 1,
+  num: 1,
+  price: 200,
+  active: true,
+})
+
+// 用户信息
+const getUserInfo = async () => {
+  const res: any = await getUserWallet({}).catch((err) => {
+    console.log(err)
+  })
+  diamond.value = res.diamond * 1 + res.gain * 1
+  console.log('[userInfo >]', res)
+}
 const setVisible = (bool: boolean) => {
   dialogVisible.value = bool
+  if (bool)
+    getUserInfo()
 }
 const inputVal = (e: any) => {
   const val = Number(e.target.value)
@@ -87,6 +112,36 @@ const changeNum = (type: string) => {
 
   if (type === 'minus' && num.value >= 2)
     num.value = Number(num.value) - 1
+}
+
+const selectPrice = (idx: number) => {
+  priceList.value.forEach((item, index) => {
+    item.active = idx === index
+    if (idx === index)
+      selectedPrice.value = item
+  })
+}
+
+// 去充值
+const toCharge = () => {
+  js_sync_app('js_sync_pay', { user_id: props.userId }, 'user_id')
+}
+const confirmBuy = async () => {
+  const res = await thanksApi.buyTicket({ number: num.value * selectedPrice.value.num }).catch((err) => {
+    const errObj = JSON.parse(err)
+    if (errObj.msg === '余额不足') {
+      setTimeout(() => {
+        toCharge()
+      }, 500)
+    }
+  })
+  if (!res)
+    return
+  showToast('购买成功')
+  setTimeout(() => {
+    setVisible(false)
+    emits('initPage')
+  }, 500)
 }
 
 defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
@@ -179,6 +234,10 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
               font-weight: 600;
             }
           }
+        }
+        .price-item.active {
+          background: url('@/assets/images/thanks/buy_item_active.webp') center
+            center / cover no-repeat transparent;
         }
       }
       .num-box {
