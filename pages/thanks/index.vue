@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="rank-list">
-          <div v-for="(item, index) in rankList" :key="index" class="rank-item">
+          <div v-for="(item, index) in rankList.slice(3)" :key="index" class="rank-item">
             <div class="rank-l">
               <div class="rank-num">
                 {{ item?.ranking }}
@@ -360,7 +360,7 @@ const getUserInfo = async () => {
     console.log(err)
   })
   console.log('[userInfo >]', res)
-  userId.value = res.user.user_id
+  userId.value = res.user_id
 }
 
 const getActInfo = async () => {
@@ -391,8 +391,9 @@ const handleSvga = (time: number) => {
     return
   }
   svgConfig.value = Object.assign(svgConfig.value, {
-    url: '/svga/thanks/cake-active.svga',
-    // url: '/svga/thanks/three1_active.svga',
+    // url: '/svga/thanks/cake-active.svga',
+    url: '/svga/thanks/three1_active.svga',
+    // url: '/svga/thanks/three12_active.svga',
     loop: false,
     onEnded: () => {
       buyRef.value.startLottery(time)
