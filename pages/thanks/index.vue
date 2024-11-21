@@ -296,7 +296,8 @@ const handleBack = () => {
 }
 const isCheck = ref(false)
 const svgConfig = ref<any>({
-  url: '/svga/thanks/cake-normal.svga',
+  // url: '/svga/thanks/cake-normal.svga',
+  url: '/svga/thanks/three1.svga',
   loop: true,
   useType: 2,
 })
@@ -380,17 +381,24 @@ const toUserCenter = (user_id: number) => {
 }
 
 const handleSvga = (time: number) => {
+  if (num.value < time) {
+    showToast('剩余次数不足')
+    return
+  }
+
   if (skipCheck.value) {
     buyRef.value.startLottery(time)
     return
   }
   svgConfig.value = Object.assign(svgConfig.value, {
-    url: '/svga/thanks/cake-active.svga',
+    // url: '/svga/thanks/cake-active.svga',
+    url: '/svga/thanks/three1_active.svga',
     loop: false,
     onEnded: () => {
       buyRef.value.startLottery(time)
       svgConfig.value = Object.assign(svgConfig.value, {
-        url: '/svga/thanks/cake-normal.svga',
+        // url: '/svga/thanks/cake-normal.svga',
+        url: '/svga/thanks/three1.svga',
         loop: true,
       })
     },
@@ -709,6 +717,7 @@ onMounted(() => {
 
         .skip-text {
           color: #b58aa7;
+          white-space: nowrap;
         }
       }
     }
