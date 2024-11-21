@@ -296,8 +296,8 @@ const handleBack = () => {
 }
 const isCheck = ref(false)
 const svgConfig = ref<any>({
-  // url: '/svga/thanks/cake-normal.svga',
-  url: '/svga/thanks/three1.svga',
+  url: '/svga/thanks/cake-normal.svga',
+  // url: '/svga/thanks/three1.svga',
   loop: true,
   useType: 2,
 })
@@ -391,14 +391,14 @@ const handleSvga = (time: number) => {
     return
   }
   svgConfig.value = Object.assign(svgConfig.value, {
-    // url: '/svga/thanks/cake-active.svga',
-    url: '/svga/thanks/three1_active.svga',
+    url: '/svga/thanks/cake-active.svga',
+    // url: '/svga/thanks/three1_active.svga',
     loop: false,
     onEnded: () => {
       buyRef.value.startLottery(time)
       svgConfig.value = Object.assign(svgConfig.value, {
-        // url: '/svga/thanks/cake-normal.svga',
-        url: '/svga/thanks/three1.svga',
+        url: '/svga/thanks/cake-normal.svga',
+        // url: '/svga/thanks/three1.svga',
         loop: true,
       })
     },
