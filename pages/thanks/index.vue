@@ -109,7 +109,7 @@
               <div class="rank-num">
                 {{ item?.ranking }}
               </div>
-              <div class="rank-avatar" @click="toUserCenter(item?.user_id)" />
+              <div class="rank-avatar" :style="`background:url(${prependHttpIfMissing(item?.face)})  center center / cover no-repeat transparent`" @click="toUserCenter(item?.user_id)" />
               <div class="rank-nick-name">
                 {{ item?.nickname }}
               </div>
@@ -130,7 +130,7 @@
               {{ myRankInfo?.ranking ? myRankInfo?.ranking : '-' }}
             </div>
             <div
-              class="my-avatar" :style="`background:url(${prependHttpIfMissing(myRankInfo?.avatar)})  center center / cover no-repeat transparent`"
+              class="my-avatar" :style="`background:url(${prependHttpIfMissing(myRankInfo?.face)})  center center / cover no-repeat transparent`"
               @click="toUserCenter(myRankInfo?.user_id)"
             />
             <div class="my-info">
@@ -459,8 +459,8 @@ const initPage = () => {
   getSetting()
 }
 // hook使用
-// useHandleData(true, () => {
-// })
+useHandleData(true, () => {
+})
 onMounted(() => {
   initPage()
   const currentTime = new Date().getTime()
