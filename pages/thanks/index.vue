@@ -459,8 +459,8 @@ const initPage = () => {
   getSetting()
 }
 // hook使用
-useHandleData(true, () => {
-})
+// useHandleData(true, () => {
+// })
 onMounted(() => {
   initPage()
   const currentTime = new Date().getTime()
