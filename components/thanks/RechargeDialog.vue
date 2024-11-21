@@ -59,19 +59,19 @@ const priceList = ref([
   {
     id: 1,
     num: 1,
-    price: 200,
+    price: 100,
     active: true,
   },
   {
     id: 2,
     num: 10,
-    price: 2000,
+    price: 1000,
     active: false,
   },
   {
     id: 3,
     num: 100,
-    price: 20000,
+    price: 10000,
     active: false,
   },
 ])
@@ -80,7 +80,7 @@ const diamond = ref(0)
 const selectedPrice = ref({
   id: 1,
   num: 1,
-  price: 200,
+  price: 100,
   active: true,
 })
 
