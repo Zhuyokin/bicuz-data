@@ -275,7 +275,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
       .btn-box {
         margin-bottom: 32px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         .btnClass {
           width: 200px;
           height: 84.5px;
@@ -286,6 +286,7 @@ defineExpose<{ setVisible: (bool: boolean) => void }>({ setVisible })
         .cancel {
           background: #fff;
           border: 2px solid #ff4bc6;
+          margin-right: 38px;
         }
         .confirm {
           color: #fff;

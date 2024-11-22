@@ -904,7 +904,7 @@ onMounted(() => {
 
           .my-rank-num {
             font-family: 'numberFont';
-            color: #fa4fbb;
+            color: #fff;
             font-size: 32px;
           }
 
