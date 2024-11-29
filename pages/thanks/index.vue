@@ -204,13 +204,13 @@ const giftList = ref([
   },
   {
     id: 2,
-    name: '优乐美奶茶',
+    name: '星河之约',
     price: '2880钻',
     img: gift2,
   },
   {
     id: 3,
-    name: '星河之约',
+    name: '优乐美奶茶',
     price: '5200钻',
     img: gift3,
   },
