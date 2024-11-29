@@ -206,13 +206,13 @@ const giftList = ref([
     id: 2,
     name: '星河之约',
     price: '2880钻',
-    img: gift2,
+    img: gift3,
   },
   {
     id: 3,
     name: '优乐美奶茶',
     price: '5200钻',
-    img: gift3,
+    img: gift2,
   },
 ])
 const btnList = ref([
