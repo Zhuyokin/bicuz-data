@@ -1,5 +1,5 @@
-import type { ModuleOptions } from '@vite-pwa/nuxt'
 import process from 'node:process'
+import type { ModuleOptions } from '@vite-pwa/nuxt'
 import { appDescription, appName } from '../constants/index'
 
 const scope = '/'
@@ -41,6 +41,7 @@ export const pwa: ModuleOptions = {
     // 不会退url
     navigateFallback: null,
     cleanupOutdatedCaches: true,
+    maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // Set to 5 MiB
     runtimeCaching: [
       // {
       //   urlPattern: /^https:\/\/fonts.googleapis.com\/.*/i,
