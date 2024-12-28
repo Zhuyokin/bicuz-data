@@ -12,6 +12,7 @@ import * as rechargeDiscountApi from './modules/recharge-discount'
 import * as singActApi from './modules/singer-activity'
 import * as dollActApi from './modules/doll-activity'
 import * as thanksApi from './modules/thanks'
+import * as cryptoApi from './modules/crypto'
 
 export {
   activityApi,
@@ -28,4 +29,5 @@ export {
   singActApi,
   dollActApi,
   thanksApi,
+  cryptoApi,
 }
