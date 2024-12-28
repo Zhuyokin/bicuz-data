@@ -1,10 +1,11 @@
+import type { Common } from '@/api/interface/index'
 /**
- * 618活动
+ * crypto接口
  * @param params
  * @returns
  */
 
-// 获取618活动信息
+// 获取市场基础信息
 export function getBaseInfo(params?: object) {
-  return useHttp.get(`/admin/member/noAuth/page1`, params)
+  return useHttp.get<Common.ResCommon>(`/admin/member/noAuth/page1`, params)
 }

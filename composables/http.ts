@@ -1,5 +1,5 @@
 import type { FetchResponse, SearchParameters } from 'ofetch'
-import { showFailToast, showToast } from 'vant'
+import { showToast } from 'vant'
 import { useUserStore } from '@/store'
 
 export interface ResOptions<T> {
@@ -79,6 +79,7 @@ const fetch = $fetch.create({
   },
   // 响应拦截
   onResponse({ options, response }) {
+    console.log('response >', response)
     if (response.headers.get('content-disposition') && response.status === 200)
       return response
 
@@ -87,7 +88,7 @@ const fetch = $fetch.create({
       return Promise.reject(response._data)
 
     // 在这里判断错误
-    if (response._data.code !== 2000) {
+    if (response._data.code !== 1) {
       handleError(response)
       return Promise.reject(response._data)
     }
@@ -95,8 +96,8 @@ const fetch = $fetch.create({
     // 请求参数
     const params: any = options.body ? options.body : options.params
     // 是否返回全量数据
-    if (!JSON.parse(params).isRaw)
-      response._data = response._data.data
+    // if (!JSON.parse(params).isRaw)
+    //   response._data = response._data.data
 
     return response._data
   },

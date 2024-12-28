@@ -21,7 +21,8 @@
     "postinstall": "simple-git-hooks"
   },
   "dependencies": {
-    "@vueuse/motion": "^2.2.3"
+    "@vueuse/motion": "^2.2.3",
+    "echarts": "^5.6.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.18.1",
