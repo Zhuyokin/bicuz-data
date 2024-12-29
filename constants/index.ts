@@ -1,2 +1,2 @@
-export const appName = 'AIMI'
-export const appDescription = '语音开黑，游戏连麦'
+export const appName = '币库'
+export const appDescription = '区块链数据、行情、链上数据分享'

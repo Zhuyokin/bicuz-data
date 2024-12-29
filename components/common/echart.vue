@@ -17,7 +17,9 @@ const chart = ref(null)
 let chartInstance: any = null
 
 const initChart = () => {
-  chartInstance = echarts.init(chart.value)
+  chartInstance = echarts.init(chart.value, null, {
+    renderer: 'svg',
+  })
   chartInstance.setOption(props.options)
 }
 
