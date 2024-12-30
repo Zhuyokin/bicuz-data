@@ -34,3 +34,13 @@ body {
   /* 可能有助于解决渲染问题 */
   transition: transform 0.1s linear;
 }
+
+$up-color: #16c784;
+$down-color: #ea3943;
+
+.up-color {
+    color: $up-color;
+}
+.down-color {
+    color: $down-color;
+}

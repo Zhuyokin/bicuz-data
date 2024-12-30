@@ -9,3 +9,8 @@ import type { Common } from '@/api/interface/index'
 export function getBaseInfo(params?: object) {
   return useHttp.get<Common.ResCommon>(`/market/dominance`, params)
 }
+
+// 获取市场新闻
+export function getNews(params?: object) {
+  return useHttp.get<Common.ResCommon>(`/market/news`, params)
+}
